@@ -27,13 +27,35 @@ export default function jobFilters() {
 
     async fetchJobs() {
       this.loading = true;
-      const params = new URLSearchParams({
-        ...this.filters,
-        sort: this.sort,
-        page: this.page,
-        'function[]': this.filters.function,
-        'type[]':     this.filters.type,
+      const params = new URLSearchParams();
+
+      if (this.filters.location) {
+        params.append('location', this.filters.location);
+      }
+
+      if (this.filters.salaryMax !== null && this.filters.salaryMax !== '') {
+        params.append('salaryMax', this.filters.salaryMax);
+      }
+
+      if (this.filters.salaryMin !== null && this.filters.salaryMin !== '') {
+        params.append('salaryMin', this.filters.salaryMin);
+      }
+
+      if (this.filters.remote) {
+        params.append('remote', 'true');
+      }
+
+      this.filters.function.forEach((value) => {
+        if (value) params.append('function[]', value);
       });
+
+      this.filters.type.forEach((value) => {
+        if (value) params.append('type[]', value);
+      });
+
+      params.append('sort', this.sort);
+      params.append('page', this.page);
+
       // Push to URL without reload
       history.pushState({}, '', `?${params}`);
       const res = await fetch(`/api/jobs?${params}`);

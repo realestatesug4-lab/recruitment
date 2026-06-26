@@ -3,7 +3,7 @@
 @section('title', 'Employer Dashboard - JobsUG')
 
 @section('content')
-<div class="page-wrap py-10">
+<div class="min-h-screen bg-gradient-to-br from-forest/5 via-white to-mint/5 py-10">
     <section class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div>
             <div class="inline-flex items-center gap-2 rounded-full bg-mint/10 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-sage">
@@ -42,7 +42,7 @@
         @endforeach
     </section>
 
-    <section class="mt-8 grid gap-6 lg:grid-cols-[1fr_0.42fr]">
+    <section class="mt-8 grid gap-6 lg:grid-cols-[1.7fr_1fr]">
         <div class="glass rounded-lg p-6">
             <div class="mb-5 flex items-center justify-between">
                 <h2 class="font-syne text-2xl font-bold text-deep">Recent applications</h2>

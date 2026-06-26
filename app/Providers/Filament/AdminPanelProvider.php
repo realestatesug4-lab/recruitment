@@ -12,6 +12,8 @@ use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
+use Filament\Facades\Filament;
+use Illuminate\Support\ServiceProvider;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -39,6 +41,9 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 AccountWidget::class,
                 FilamentInfoWidget::class,
+                \App\Filament\Admin\Widgets\ThemedStatsWidget::class,
+                \App\Filament\Admin\Widgets\HiringTrendsWidget::class,
+                \App\Filament\Admin\Widgets\ApplicationsKanbanWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

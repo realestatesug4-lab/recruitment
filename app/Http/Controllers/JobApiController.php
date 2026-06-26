@@ -30,12 +30,16 @@ class JobApiController extends Controller
             $query->whereIn('job_type', $types);
         }
 
-        if ($request->filled('salaryMax')) {
+        if ($request->filled('salaryMax') && is_numeric($request->input('salaryMax'))) {
             $query->where(function ($salaryQuery) use ($request): void {
                 $salaryQuery
                     ->whereNull('salary_min')
                     ->orWhere('salary_min', '<=', (int) $request->input('salaryMax'));
             });
+        }
+
+        if ($request->boolean('remote')) {
+            $query->where('is_remote', true);
         }
 
         match ($request->string('sort')->toString()) {
