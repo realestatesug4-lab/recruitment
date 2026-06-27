@@ -7,12 +7,55 @@ services:
       composer install --no-dev --optimize-autoloader
       npm install
       npm run build
-      php artisan key:generate --force
+      php artisan storage:link
       php artisan config:cache
       php artisan route:cache
       php artisan view:cache
 
-    startCommand: php artisan serve --host=0.0.0.0 --port=$PORT
+    startCommand: php -S 0.0.0.0:$PORT -t public
+
+    envVars:
+      - key: APP_ENV
+        value: production
+
+      - key: APP_DEBUG
+        value: "false"
+
+      - key: LOG_CHANNEL
+        value: stack
+
+      - key: APP_URL
+        value: https://recruitment-oi27.onrender.com
+
+      - key: DB_CONNECTION
+        value: pgsql
+
+      - key: QUEUE_CONNECTION
+        value: database
+
+      - key: CACHE_STORE
+        value: file
+
+      - key: SESSION_DRIVER
+        value: file
+
+      - key: FILESYSTEM_DISK
+        value: local
+
+  - type: worker
+    name: recruitment-worker
+    runtime: php
+
+    buildCommand: |
+      composer install --no-dev --optimize-autoloader
+      npm install
+      npm run build
+      php artisan storage:link
+      php artisan config:cache
+      php artisan route:cache
+      php artisan view:cache
+
+    startCommand: php artisan queue:work database --sleep=3 --tries=3 --timeout=90 --memory=256
 
     envVars:
       - key: APP_ENV
@@ -25,4 +68,16 @@ services:
         value: stack
 
       - key: DB_CONNECTION
-        value: psql
+        value: pgsql
+
+      - key: QUEUE_CONNECTION
+        value: database
+
+      - key: CACHE_STORE
+        value: file
+
+      - key: SESSION_DRIVER
+        value: file
+
+      - key: FILESYSTEM_DISK
+        value: local
