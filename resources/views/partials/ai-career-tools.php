@@ -1,5 +1,5 @@
-<div class="bento-card card-ai">
-    <div class="glass-forest rounded-lg p-6 h-full flex flex-col">
+<div class="bento-card card-ai mx-3xl">
+    <div class="glass-forest rounded-lg p-6 h-full mx-auto items-center flex flex-col">
         <div class="ai-icon w-11 h-11 bg-mint/15 rounded-xl flex items-center justify-center text-xl mb-3.5">✦</div>
         <div class="ai-title font-syne font-bold text-white/92">AI Career Tools</div>
         <div class="ai-desc text-sm text-white/55 leading-relaxed flex-1 mt-2">Build your CV, write cover letters, and prep for interviews with AI trained on Ugandan market data.</div>

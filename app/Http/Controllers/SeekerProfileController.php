@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Domain\Users\Models\SeekerProfile;
 use App\Domain\Jobs\Models\Skill;
+use App\Events\CandidateProfileUpdated;
 use App\Http\Requests\StoreSeekerProfileRequest;
 use App\Http\Requests\UpdateSeekerProfileRequest;
 use Illuminate\Support\Facades\Auth;
@@ -39,6 +40,7 @@ class SeekerProfileController extends Controller
         $profile = Auth::user()->seekerProfile()->create($data);
 
         $profile->skills()->sync($skills);
+        event(new CandidateProfileUpdated(Auth::user()));
 
         return redirect()->route('seeker.profile.show')->with('success', 'Profile created successfully.');
     }
@@ -63,6 +65,7 @@ class SeekerProfileController extends Controller
 
         $profile->update($data);
         $profile->skills()->sync($skills);
+        event(new CandidateProfileUpdated(Auth::user()));
 
         return redirect()->route('seeker.profile.show')->with('success', 'Profile updated successfully.');
     }

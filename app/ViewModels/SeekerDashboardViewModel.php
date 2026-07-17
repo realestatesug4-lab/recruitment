@@ -23,7 +23,7 @@ class SeekerDashboardViewModel
         return [
             ['label' => 'Applications', 'value' => $this->applications->count(), 'hint' => $this->shortlistedCount().' shortlisted'],
             ['label' => 'Saved jobs', 'value' => $this->savedJobs->total(), 'hint' => 'Bookmarked roles'],
-            ['label' => 'Profile', 'value' => $this->profileCompletion().'%', 'hint' => $this->profileStatus()],
+            ['label' => 'Profile', 'value' => $this->profileCompletion(), 'hint' => $this->profileStatus()],
         ];
     }
 

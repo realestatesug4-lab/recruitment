@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'elasticsearch' => [
+        'hosts' => explode(',', env('ELASTICSEARCH_HOSTS', 'http://127.0.0.1:9200')),
+        'index' => env('ELASTICSEARCH_INDEX', 'job_posts'),
+    ],
+
 ];

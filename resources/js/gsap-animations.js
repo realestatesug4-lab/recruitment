@@ -10,7 +10,12 @@ gsap.registerPlugin(ScrollTrigger, TextPlugin)
 export function initHomeAnimations() {
 
   // ── HERO entrance ──
-  const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+  const heroTl = gsap.timeline({
+    scrollTrigger: {
+        trigger: '.hero',
+        start: 'top 85%',
+    },
+    defaults: { ease: 'power3.out' } })
 
   heroTl
     .from('.hero-label', { opacity: 0, y: 16, duration: 0.5 })
@@ -33,10 +38,13 @@ export function initHomeAnimations() {
   // ── BENTO GRID staggered reveal ──
   gsap.from('.bento-card', {
     scrollTrigger: {
-      trigger: '.bento',
+      trigger: '.bento-container',
       start: 'top 80%',
     },
     opacity: 0,
+    rotationX: 10,
+    rotationY: 15,
+    z: -100,
     y: 40,
     scale: 0.97,
     stagger: {
@@ -44,9 +52,61 @@ export function initHomeAnimations() {
       from: 'start',
       grid: 'auto',
     },
-    duration: 0.7,
+    duration: 1,
+    ease: 'power4.out',
+  })
+
+  gsap.from('.bento-card-2', {
+    scrollTrigger:{
+        trigger: '.bento-container',
+        start: 'top 80%',
+    },
+    opacity: 0,
+    rotationX: 10,
+    rotationY: -15,
+    x: -30,
+    y: 50,
+    duration: 80,
+    delay: 0.2,
     ease: 'power3.out',
   })
+
+  gsap.from('.bento-card-2', {
+    scrollTrigger:{
+        trigger: '.bento-container',
+        start: 'top 80%',
+    },
+    opacity: 0,
+    rotationX: 10,
+    rotationY: -15,
+    x: -30,
+    y: 50,
+    duration: 80,
+    delay: 0.2,
+    ease: 'power3.out',
+  })
+
+  //Floating kinetic Loop
+  gsap.to('.float-el-1', {
+    y: -25,
+    x: 20,
+    rotation: 360,
+    duration: 12,
+    repeat: -1,
+    yoyo: true,
+    ease: 'sine.inOut'
+  })
+
+  gsap.to('.float-el-2', {
+    y: 20,
+    x: -15,
+    rotation: -180,
+    duration: 15,
+    repeat: -1,
+    yoyo: true,
+    ease: 'sine.inOut'
+  })
+
 
 
   // ── STAT COUNTER animation ──

@@ -7,6 +7,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "elasticsearch/elasticsearch": "^9.4",
         "filament/filament": "^5.6",
         "flowframe/laravel-trend": "^0.5.0",
         "intervention/image-laravel": "^4.0",
@@ -16,7 +17,6 @@
         "laravel/tinker": "^3.0",
         "leandrocfe/filament-apex-charts": "^5.1",
         "livewire/livewire": "^4.3",
-        "meilisearch/meilisearch-php": "^1.16",
         "spatie/laravel-medialibrary": "^11.23",
         "spatie/laravel-permission": "^8.0",
         "spatie/laravel-sitemap": "^8.1",

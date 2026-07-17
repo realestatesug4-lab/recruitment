@@ -6,10 +6,20 @@ export default function searchBar() {
     open: false,
 
     async fetchSuggestions() {
-      if (this.query.length < 2) { this.suggestions = []; return; }
-      const res = await fetch(`/api/jobs/suggest?q=${encodeURIComponent(this.query)}`);
-      this.suggestions = await res.json();
-      this.open = true;
+      if (this.query.length < 2) {
+        this.suggestions = [];
+        this.open = false;
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/jobs/suggest?q=${encodeURIComponent(this.query)}`);
+        this.suggestions = await res.json();
+        this.open = this.suggestions.length > 0;
+      } catch (error) {
+        this.suggestions = [];
+        this.open = false;
+      }
     },
 
     selectSuggestion(s) {
@@ -20,8 +30,12 @@ export default function searchBar() {
 
     submit() {
       const url = new URL('/jobs', window.location.origin);
-      url.searchParams.set('q', this.query);
-      url.searchParams.set('location', this.location);
+      if (this.query.trim()) {
+        url.searchParams.set('q', this.query.trim());
+      }
+      if (this.location.trim()) {
+        url.searchParams.set('location', this.location.trim());
+      }
       window.location.href = url.toString();
     }
   }

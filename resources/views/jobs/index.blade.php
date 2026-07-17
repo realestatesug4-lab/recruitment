@@ -39,6 +39,12 @@
             <span x-text="(filters.salaryMax || 5000000).toLocaleString() + ' UGX'"></span>
           </div>
         </div>
+
+        {{-- Remote only --}}
+        <label class="flex items-center gap-2.5 mt-2 cursor-pointer group">
+          <input type="checkbox" x-model="filters.remote" @change="fetchJobs" class="rounded border-forest/20 text-forest focus:ring-mint">
+          <span class="text-sm text-text-mid group-hover:text-deep transition">Remote only</span>
+        </label>
       </div>
     </aside>
 
@@ -54,6 +60,7 @@
           <option value="relevance">Most Relevant</option>
           <option value="date">Most Recent</option>
           <option value="salary_desc">Highest Salary</option>
+          <option value="featured">Featured</option>
         </select>
       </div>
 

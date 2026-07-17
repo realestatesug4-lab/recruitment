@@ -33,6 +33,7 @@ Route::middleware(['auth', 'verified'])->prefix('employer')->name('employer.')->
     Route::get('onboarding', [EmployerOnboardingController::class, 'create'])->name('onboarding.create');
     Route::post('onboarding', [EmployerOnboardingController::class, 'store'])->name('onboarding.store');
     Route::get('dashboard', [EmployerDashboardController::class, 'index'])->name('dashboard');
+    Route::put('company', [CompanyController::class, 'updateForEmployer'])->name('company.update');
     Route::get('jobs', [EmployerJobController::class, 'index'])->name('jobs.index');
     Route::get('jobs/create', [EmployerJobController::class, 'create'])->name('jobs.create');
     Route::post('jobs', [EmployerJobController::class, 'store'])->name('jobs.store');

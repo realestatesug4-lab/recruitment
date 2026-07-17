@@ -12,12 +12,12 @@
         @foreach($categories as $cat)
             <a
                 href="{{ route('jobs.index', ['category' => $cat['name'] ?? null]) }}"
-                class="cat-item min-h-28 bg-white/50 border border-white/70 rounded-md p-3.5 flex flex-col justify-between transition-all duration-200 hover:bg-forest/6 hover:border-mint/30 hover:-translate-y-0.5"
+                class="cat-item min-h-28 bg-mint border border-white/70 rounded-md p-3.5 flex flex-col justify-between transition-all duration-200 hover:bg-forest hover:border-mint/30 hover:-translate-y-0.5"
             >
                 <span class="cat-icon text-xl leading-none" aria-hidden="true">{{ $cat['icon'] ?? '•' }}</span>
 
                 <span>
-                    <span class="cat-name text-sm font-semibold text-deep block leading-snug">{{ $cat['name'] }}</span>
+                    <span class="cat-name text-sm font-semibold text-amber block leading-snug">{{ $cat['name'] }}</span>
                     <span class="cat-count text-xs text-text-light block mt-1">{{ $cat['count'] }} jobs</span>
                 </span>
             </a>

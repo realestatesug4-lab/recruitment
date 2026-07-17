@@ -12,9 +12,14 @@
             <h1 class="mt-4 font-syne text-4xl font-bold text-deep">Hiring dashboard</h1>
             <p class="mt-2 text-text-mid">{{ $viewModel->company->name }} &middot; {{ $viewModel->company->industry ?? 'Employer workspace' }}</p>
         </div>
-        <div class="flex gap-3">
+        <div class="flex flex-wrap gap-3">
+            <a href="{{ route('employer.jobs.create') }}" class="rounded-full bg-forest px-5 py-3 text-sm font-semibold text-white transition hover:bg-sage">Create job</a>
             <a href="{{ route('employer.jobs.index') }}" class="rounded-full bg-white/70 px-5 py-3 text-sm font-semibold text-forest transition hover:bg-white">Manage jobs</a>
-            <a href="{{ route('employer.applications.index') }}" class="rounded-full bg-forest px-5 py-3 text-sm font-semibold text-white transition hover:bg-sage">Review applications</a>
+            <a href="{{ route('employer.applications.index') }}" class="rounded-full bg-white/70 px-5 py-3 text-sm font-semibold text-forest transition hover:bg-white">Review applications</a>
+            <form method="POST" action="{{ route('logout') }}" class="inline-flex">
+                @csrf
+                <button type="submit" class="rounded-full border border-gray-200 bg-white/80 px-5 py-3 text-sm font-semibold text-text-mid transition hover:bg-white">Logout</button>
+            </form>
         </div>
     </section>
 
@@ -83,7 +88,46 @@
                 </div>
             </div>
             <p class="mt-5 text-sm leading-6 text-text-mid">{{ $viewModel->company->description ?? 'Keep your company profile fresh so candidates understand your team.' }}</p>
-            <a href="{{ route('companies.show', $viewModel->company->slug) }}" class="mt-5 inline-flex text-sm font-semibold text-sage hover:text-forest">View public profile &rarr;</a>
+            <div class="mt-5 flex flex-wrap gap-3">
+                <a href="{{ route('companies.show', $viewModel->company->slug) }}" class="inline-flex text-sm font-semibold text-sage hover:text-forest">View public profile &rarr;</a>
+            </div>
+            <form action="{{ route('employer.company.update') }}" method="POST" enctype="multipart/form-data" class="mt-6 space-y-4 rounded-lg border border-gray-200 bg-white/70 p-4">
+                @csrf
+                @method('PUT')
+                <div>
+                    <label class="block text-sm font-medium text-text-mid">Company name</label>
+                    <input type="text" name="name" value="{{ old('name', $viewModel->company->name) }}" class="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm" required>
+                </div>
+                <div class="grid gap-4 sm:grid-cols-2">
+                    <div>
+                        <label class="block text-sm font-medium text-text-mid">Industry</label>
+                        <input type="text" name="industry" value="{{ old('industry', $viewModel->company->industry) }}" class="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-text-mid">Location</label>
+                        <input type="text" name="location" value="{{ old('location', $viewModel->company->location) }}" class="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-text-mid">Description</label>
+                    <textarea name="description" rows="3" class="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm">{{ old('description', $viewModel->company->description) }}</textarea>
+                </div>
+                <div class="grid gap-4 sm:grid-cols-2">
+                    <div>
+                        <label class="block text-sm font-medium text-text-mid">Website</label>
+                        <input type="url" name="website" value="{{ old('website', $viewModel->company->website) }}" class="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-text-mid">Team size</label>
+                        <input type="text" name="size" value="{{ old('size', $viewModel->company->size) }}" class="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-text-mid">Company logo</label>
+                    <input type="file" name="logo" accept="image/*" class="mt-2 block w-full text-sm text-text-mid">
+                </div>
+                <button type="submit" class="w-full rounded-full bg-forest px-4 py-2 text-sm font-semibold text-white transition hover:bg-sage">Update company profile</button>
+            </form>
         </aside>
     </section>
 </div>

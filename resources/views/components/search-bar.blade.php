@@ -2,7 +2,7 @@
 
 <div
     x-data="searchBar()"
-    class="relative flex items-center gap-0 glass rounded-xl px-6 py-1.5 max-w-2xl shadow-md"
+    class="relative flex items-center gap-0 glass mt-3 mx-auto rounded-xl px-6 py-1.5 max-w-6xl shadow-md"
 >
     <svg class="w-4 h-4 text-text-light flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
         <circle cx="11" cy="11" r="8"></circle>
@@ -22,7 +22,7 @@
         x-show="suggestions.length > 0 && open"
         x-transition
         @click.outside="open = false"
-        class="absolute top-full left-0 right-0 mt-2 glass rounded-lg overflow-hidden z-50"
+        class="absolute top-full left-0 right-0 mt-2 glass rounded-lg overflow-hidden z-50 shadow-lg"
     >
         <template x-for="s in suggestions" :key="s.id">
             <div

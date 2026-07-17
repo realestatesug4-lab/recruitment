@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Domain\Jobs\Models\Job;
 use App\Domain\Applications\Models\Application;
+use App\Events\ApplicationSubmitted;
 use App\Domain\Applications\Enums\ApplicationStatus;
 use App\Http\Requests\StoreApplicationRequest;
 use Illuminate\Support\Facades\Auth;
@@ -50,6 +51,8 @@ class SeekerApplicationController extends Controller
             'status' => ApplicationStatus::SUBMITTED,
             'applied_at' => now(),
         ]);
+
+        event(new ApplicationSubmitted($application));
 
         return redirect()->route('seeker.applications.thankyou', $job->slug)->with('success', 'Your application has been submitted.');
     }

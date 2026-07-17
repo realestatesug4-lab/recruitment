@@ -9,7 +9,10 @@
             <h1 class="font-syne text-4xl font-bold text-deep">Jobs</h1>
             <p class="mt-2 text-text-mid">Manage roles connected to your employer profile.</p>
         </div>
-        <a href="{{ route('employer.dashboard') }}" class="rounded-full bg-white/70 px-5 py-3 text-sm font-semibold text-forest transition hover:bg-white">Back to dashboard</a>
+        <div class="flex flex-wrap gap-3">
+            <a href="{{ route('employer.jobs.create') }}" class="rounded-full bg-forest px-5 py-3 text-sm font-semibold text-white transition hover:bg-sage">Create job</a>
+            <a href="{{ route('employer.dashboard') }}" class="rounded-full bg-white/70 px-5 py-3 text-sm font-semibold text-forest transition hover:bg-white">Back to dashboard</a>
+        </div>
     </div>
 
     <div class="glass overflow-hidden rounded-lg">
@@ -29,6 +32,7 @@
                 <div class="p-8 text-center">
                     <h2 class="font-syne text-2xl font-bold text-deep">No jobs yet</h2>
                     <p class="mt-2 text-text-mid">Create your first role to start receiving applications.</p>
+                    <a href="{{ route('employer.jobs.create') }}" class="mt-5 inline-flex rounded-full bg-forest px-5 py-3 text-sm font-semibold text-white transition hover:bg-sage">Create your first job</a>
                 </div>
             @endforelse
         </div>

@@ -14,6 +14,10 @@
             <div class="flex flex-wrap gap-3">
                 <a href="{{ route('jobs.index') }}" class="rounded-full bg-white/90 px-5 py-3 text-sm font-semibold text-forest shadow-sm shadow-forest/5 transition hover:bg-white">Browse jobs</a>
                 <a href="{{ route('seeker.applications.progress') }}" class="rounded-full bg-forest px-5 py-3 text-sm font-semibold text-white transition hover:bg-sage">Application progress</a>
+                <form method="POST" action="{{ route('logout') }}" class="inline-flex">
+                    @csrf
+                    <button type="submit" class="rounded-full border border-gray-200 bg-white/80 px-5 py-3 text-sm font-semibold text-text-mid transition hover:bg-white">Logout</button>
+                </form>
             </div>
         </div>
 
@@ -23,7 +27,7 @@
                     <div class="flex items-center justify-between gap-4">
                         <div class="space-y-2">
                             <p class="text-xs font-semibold uppercase tracking-wide text-text-light">{{ $stat['label'] }}</p>
-                            <p class="text-4xl font-syne font-bold text-deep">{{ number_format($stat['value']) }}</p>
+                            <p class="text-4xl font-syne font-bold text-deep">{{ number_format((float) ($stat['value'] ?? 0)) }}</p>
                         </div>
                         <div class="flex h-12 w-12 items-center justify-center rounded-3xl bg-forest/10 text-forest text-xl font-bold">{{ str($stat['label'])->substr(0,1) }}</div>
                     </div>

@@ -6,7 +6,8 @@
     :root {
         --cream: #F5F2EC;
         --deep: #0D1117;
-        --forest: #1B4332;
+        --forest: #c8990b;
+        /* --forest: #1B4332; */
         --sage: #2D6A4F;
         --mint: #52B788;
         --amber: #F4A261;
@@ -15,17 +16,44 @@
         --glass-shadow: rgba(27, 67, 50, 0.10);
     }
 
+    * {
+        box-sizing: border-box;
+    }
+
     html {
         scroll-behavior: smooth;
+        font-size: 16px;
     }
 
     body {
         min-height: 100vh;
         overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
         background:
             radial-gradient(ellipse 70% 60% at 15% 10%, rgba(82, 183, 136, 0.13) 0%, transparent 60%),
             radial-gradient(ellipse 50% 50% at 85% 20%, rgba(244, 162, 97, 0.09) 0%, transparent 55%),
             radial-gradient(ellipse 60% 40% at 60% 85%, rgba(27, 67, 50, 0.08) 0%, transparent 60%),
+            var(--cream);
+    }
+
+    img,
+    svg {
+        display: block;
+        max-width: 100%;
+        height: auto;
+    }
+
+    ::selection {
+        background: rgba(82, 183, 136, 0.28);
+        color: var(--deep);
+    }
+}
+
+@media (max-width: 640px) {
+    body {
+        background:
+            radial-gradient(ellipse 100% 60% at 50% 0%, rgba(82, 183, 136, 0.16) 0%, transparent 55%),
             var(--cream);
     }
 }
@@ -78,3 +106,4 @@
         @apply bg-blue-100 text-blue-700;
     }
 }
+

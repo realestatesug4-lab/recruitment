@@ -13,7 +13,7 @@ use App\Contracts\{
 use App\Repositories\{
     JobRepository, UserRepository, CompanyRepository, ApplicationRepository
 };
-use App\Services\Search\MeiliSearchService;
+use App\Services\Search\ElasticsearchSearchService;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -24,7 +24,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ApplicationRepositoryInterface::class, ApplicationRepository::class);
 
         // Swappable search backend — change ONE line to migrate engines
-        $this->app->bind(SearchServiceInterface::class, MeiliSearchService::class);
+        $this->app->bind(SearchServiceInterface::class, ElasticsearchSearchService::class);
     }
 }
 

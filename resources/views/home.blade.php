@@ -20,12 +20,13 @@
 
     <x-bento.stats-card />
 
+    @include('partials.ai-career-tools')
+
     @include('partials.testimonials')
 
     @include('partials.companies-strip', [
         'companies' => $viewModel->trustedCompanies(),
     ])
 
-    @include('partials.footer')
 </div>
 @endsection

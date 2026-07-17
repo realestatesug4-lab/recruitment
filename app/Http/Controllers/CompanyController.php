@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Companies\Models\Company;
+use App\Events\CompanyCreated;
 use App\ViewModels\CompanyIndexViewModel;
 use App\ViewModels\CompanyProfileViewModel;
 use Illuminate\Http\Request;
@@ -10,6 +11,7 @@ use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
@@ -38,6 +40,7 @@ class CompanyController extends Controller
     public function store(StoreCompanyRequest $request): RedirectResponse
     {
         $company = Company::create(array_merge($request->validated(), ['owner_id' => Auth::id()]));
+        event(new CompanyCreated($company));
 
         return redirect()->route('companies.show', $company)->with('success', 'Company created.');
     }
@@ -46,6 +49,25 @@ class CompanyController extends Controller
     {
         $company->update($request->validated());
         return redirect()->route('companies.show', $company)->with('success', 'Company updated.');
+    }
+
+    public function updateForEmployer(UpdateCompanyRequest $request): RedirectResponse
+    {
+        $company = Auth::user()?->employerProfile?->company;
+
+        if (! $company) {
+            abort(403);
+        }
+
+        $data = $request->validated();
+
+        if ($request->hasFile('logo')) {
+            $data['logo_url'] = $request->file('logo')->store('logos', 'public');
+        }
+
+        $company->update($data);
+
+        return redirect()->route('employer.dashboard')->with('success', 'Company profile updated.');
     }
 
     public function destroy(Company $company): RedirectResponse

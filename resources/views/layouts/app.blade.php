@@ -11,7 +11,11 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @vite([
+            'resources/css/app.css',
+            'resources/js/app.js',
+        ])
+
         @stack('head')
     </head>
     <body class="font-sans antialiased text-text-dark">
@@ -42,6 +46,6 @@
         @stack('scripts')
     </body>
     <footer>
-        @include('partials.footer');
+        @include('partials.footer')
     </footer>
 </html>
