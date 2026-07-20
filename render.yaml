@@ -4,15 +4,15 @@ services:
     runtime: php
 
     buildCommand: |
-      composer install --no-dev --optimize-autoloader
-      npm install
+      composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+      npm ci
       npm run build
       php artisan storage:link
       php artisan config:cache
       php artisan route:cache
       php artisan view:cache
 
-    startCommand: php -S 0.0.0.0:$PORT -t public
+    startCommand: php -S 0.0.0.0:$PORT -t public public/index.php
 
     envVars:
       - key: APP_ENV
@@ -34,26 +34,26 @@ services:
         value: database
 
       - key: CACHE_STORE
-        value: file
+        value: database
 
       - key: SESSION_DRIVER
-        value: file
+        value: database
 
       - key: FILESYSTEM_DISK
-        value: local
+        value: public
+
+      - key: SESSION_SECURE_COOKIE
+        value: "true"
+
+      - key: SESSION_SAME_SITE
+        value: lax
 
   - type: worker
     name: recruitment-worker
     runtime: php
 
     buildCommand: |
-      composer install --no-dev --optimize-autoloader
-      npm install
-      npm run build
-      php artisan storage:link
-      php artisan config:cache
-      php artisan route:cache
-      php artisan view:cache
+      composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
     startCommand: php artisan queue:work database --sleep=3 --tries=3 --timeout=90 --memory=256
 
@@ -74,10 +74,16 @@ services:
         value: database
 
       - key: CACHE_STORE
-        value: file
+        value: database
 
       - key: SESSION_DRIVER
-        value: file
+        value: database
 
       - key: FILESYSTEM_DISK
-        value: local
+        value: public
+
+      - key: SESSION_SECURE_COOKIE
+        value: "true"
+
+      - key: SESSION_SAME_SITE
+        value: lax

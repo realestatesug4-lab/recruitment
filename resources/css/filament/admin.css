@@ -52,6 +52,10 @@
         backdrop-filter: blur(24px) saturate(1.4);
     }
 
+    .admin-shell-card {
+        @apply rounded-3xl border border-slate-200/70 bg-white/90 shadow-sm;
+    }
+
     .glass-forest {
         background: rgba(27, 67, 50, 0.82);
         border: 1px solid rgba(82, 183, 136, 0.18);
@@ -122,17 +126,85 @@
 
 /* Sidebar (admin panel) */
 .fi-sidebar {
-    background: rgba(245, 242, 236, 0.95);
+    background: linear-gradient(180deg, rgba(245, 242, 236, 0.98) 0%, rgba(236, 232, 224, 0.94) 100%);
     backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(27, 67, 50, 0.08);
+}
+
+.fi-sidebar-header,
+.fi-sidebar-nav {
+    padding-inline: 0.85rem;
+}
+
+.fi-sidebar-item {
+    border-radius: 12px;
+    margin: 0.2rem 0;
+}
+
+.fi-sidebar-item:hover,
+.fi-sidebar-item[aria-current='page'] {
+    background: rgba(27, 67, 50, 0.08);
+}
+
+/* Header / top bar */
+.fi-topbar,
+.fi-header {
+    background: rgba(255, 255, 255, 0.76);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(27, 67, 50, 0.08);
+}
+
+/* Cards */
+.fi-section {
+    border-radius: 20px;
+}
+
+.fi-wi,
+.fi-card {
+    border-radius: 20px;
+    border: 1px solid rgba(27, 67, 50, 0.08);
+    box-shadow: 0 10px 40px rgba(27, 67, 50, 0.06);
+}
+
+/* Tables */
+.fi-ta-table {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(27, 67, 50, 0.08);
+}
+
+.fi-ta-table thead {
+    background: rgba(27, 67, 50, 0.04);
+}
+
+.fi-ta-table tbody tr:hover {
+    background: rgba(82, 183, 136, 0.06);
 }
 
 /* Forms */
-.fi-input {
-    border-radius: 10px;
-    border-color: rgba(0, 0, 0, 0.08);
+.fi-input,
+.fi-select,
+.fi-textarea,
+.fi-attachment-input {
+    border-radius: 12px;
+    border-color: rgba(27, 67, 50, 0.12);
+    background: rgba(255, 255, 255, 0.92);
 }
 
-.fi-input:focus {
+.fi-input:focus,
+.fi-select:focus,
+.fi-textarea:focus,
+.fi-attachment-input:focus {
     border-color: var(--forest);
     box-shadow: 0 0 0 2px rgba(27, 67, 50, 0.15);
+}
+
+/* Buttons */
+.fi-btn {
+    border-radius: 999px;
+}
+
+.fi-btn-primary {
+    background: linear-gradient(135deg, var(--forest) 0%, var(--sage) 100%);
+    color: white;
 }
