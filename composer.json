@@ -6,7 +6,7 @@
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
-        "php": "^8.3",
+        "php": "^8.4",
         "5balloons/laravel-smart-ads": "^1.1",
         "elasticsearch/elasticsearch": "^9.4",
         "filament/filament": "^5.6",
