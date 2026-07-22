@@ -1,6 +1,5 @@
 export default function jobFilters() {
   return {
-    // Filter state
     filters: {
       function:   [],
       industry:   [],
@@ -16,8 +15,16 @@ export default function jobFilters() {
     jobs: [],
     total: 0,
     page: 1,
+    filtersOpen: false,
 
-    // Sync with URL on init
+    get activeFilterCount() {
+      let count = this.filters.type.length;
+      if (this.filters.remote) count++;
+      if (this.filters.salaryMax && this.filters.salaryMax < 5000000) count++;
+      if (this.filters.location) count++;
+      return count;
+    },
+
     init() {
       const params = new URLSearchParams(window.location.search);
       if (params.get('location')) this.filters.location = params.get('location');
@@ -56,7 +63,6 @@ export default function jobFilters() {
       params.append('sort', this.sort);
       params.append('page', this.page);
 
-      // Push to URL without reload
       history.pushState({}, '', `?${params}`);
       const res = await fetch(`/api/jobs?${params}`);
       const data = await res.json();

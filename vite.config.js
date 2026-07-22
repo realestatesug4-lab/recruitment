@@ -8,7 +8,6 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/css/filament/admin.css',
                 'resources/js/app.js',
-                'resources/js/gsap-animations.js',
             ],
             refresh: true,
         }),

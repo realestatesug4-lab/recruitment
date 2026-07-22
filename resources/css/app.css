@@ -6,14 +6,14 @@
     :root {
         --cream: #F5F2EC;
         --deep: #0D1117;
-        --forest: #c8990b;
-        /* --forest: #1B4332; */
+        --forest: #1B4332;
         --sage: #2D6A4F;
         --mint: #52B788;
         --amber: #F4A261;
         --glass-bg: rgba(255, 255, 255, 0.55);
         --glass-border: rgba(255, 255, 255, 0.7);
         --glass-shadow: rgba(27, 67, 50, 0.10);
+        --touch-min: 44px;
     }
 
     * {
@@ -23,6 +23,7 @@
     html {
         scroll-behavior: smooth;
         font-size: 16px;
+        -webkit-tap-highlight-color: transparent;
     }
 
     body {
@@ -48,6 +49,10 @@
         background: rgba(82, 183, 136, 0.28);
         color: var(--deep);
     }
+
+    [x-cloak] {
+        display: none !important;
+    }
 }
 
 @media (max-width: 640px) {
@@ -58,9 +63,23 @@
     }
 }
 
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
 @layer components {
     .page-wrap {
-        @apply mx-auto max-w-7xl px-6;
+        @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
     }
 
     .glass,
@@ -73,7 +92,7 @@
     }
 
     .nav-glass {
-        background: rgba(245, 242, 236, 0.72);
+        background: rgba(245, 242, 236, 0.85);
     }
 
     .glass-forest {
@@ -84,13 +103,22 @@
         -webkit-backdrop-filter: blur(20px) saturate(1.3);
     }
 
-    .bento-card {
-        @apply overflow-hidden rounded-lg transition-all duration-300;
+    .glass-amber {
+        background: rgba(255, 255, 255, 0.65);
+        border: 1px solid rgba(255, 255, 255, 0.75);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
     }
 
-    .bento-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 20px 60px rgba(27, 67, 50, 0.14);
+    .bento-card {
+        @apply overflow-hidden rounded-xl sm:rounded-2xl transition-all duration-300;
+    }
+
+    @media (hover: hover) {
+        .bento-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(27, 67, 50, 0.14);
+        }
     }
 
     .badge-green {
@@ -105,5 +133,26 @@
     .badge-blue {
         @apply bg-blue-100 text-blue-700;
     }
+
+    .btn-touch {
+        min-height: var(--touch-min);
+        min-width: var(--touch-min);
+    }
+
+    .logos-strip-wrap {
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .logos-strip-wrap .logos-strip {
+        display: flex;
+        flex-wrap: nowrap;
+        width: max-content;
+    }
 }
 
+@layer utilities {
+    .touch-manipulation {
+        touch-action: manipulation;
+    }
+}

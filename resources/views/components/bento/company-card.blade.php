@@ -4,7 +4,7 @@
     $accent = $company['accent'] ?? '#1B4332';
 @endphp
 
-<div class="bento-card card-company glass h-full rounded-lg p-5">
+<div class="bento-card card-company glass h-full rounded-xl sm:rounded-2xl p-4 sm:p-5">
     <div class="card-tag text-xs font-semibold uppercase tracking-wide text-sage mb-3 flex items-center gap-1.5">
         <span class="w-1 h-1 rounded-full bg-sage"></span>
         Featured Employer

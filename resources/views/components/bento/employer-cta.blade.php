@@ -1,4 +1,4 @@
-<div class="bento-card card-employer glass-forest rounded-lg p-8 flex flex-col justify-between">
+<div class="bento-card card-employer glass-forest rounded-xl sm:rounded-2xl p-5 sm:p-8 flex flex-col justify-between">
     <div>
         <div class="card-tag text-xs font-semibold uppercase tracking-wide text-mint/80 flex items-center gap-1.5 mb-3">
             <span class="w-1 h-1 rounded-full bg-mint"></span>
@@ -25,7 +25,7 @@
             </div>
         </div>
     </div>
-    <button class="btn-mint bg-mint text-forest font-semibold px-6 py-3 rounded-full transition-all duration-200 hover:bg-[#6DC99A] hover:-translate-y-0.5 hover:shadow-lg">
+    <a href="{{ route('register') }}" class="btn-mint inline-flex items-center justify-center w-full sm:w-auto bg-mint text-forest font-semibold px-6 py-3 rounded-full transition-all duration-200 hover:bg-[#6DC99A] active:scale-[0.98] min-h-[44px]">
         Post a Job Free →
-    </button>
+    </a>
 </div>

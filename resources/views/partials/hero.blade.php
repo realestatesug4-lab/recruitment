@@ -40,47 +40,43 @@
 </section>
 --}}
 
-<section class="hero relative w-full max-w-7xl mx-auto px-6 py-12 md:py-20 overflow-hidden">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+<section class="hero relative w-full max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 md:py-20 overflow-hidden">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-20 items-center">
 
         {{-- LEFT COLUMN: Text & Data --}}
         <div class="hero-content flex flex-col z-10">
-            <div class="hero-label inline-flex items-center gap-2 text-sm font-medium text-sage bg-mint/12 border border-mint/20 px-3.5 py-1.5 rounded-full mb-6 uppercase tracking-wide">
+            <div class="hero-label inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-sage bg-mint/12 border border-mint/20 px-3 py-1.5 rounded-full mb-4 sm:mb-6 uppercase tracking-wide w-fit">
                 <span class="w-1.5 h-1.5 rounded-full bg-mint animate-pulse"></span>
                 {{ $hero['label'] }}
             </div>
 
-            <h1 class="hero-headline font-syne font-extrabold text-5xl md:text-7xl lg:text-8xl leading-[0.95] tracking-tighter text-deep max-w-2xl mb-7">
+            <h1 class="hero-headline font-syne font-extrabold text-4xl sm:text-5xl md:text-7xl lg:text-8xl leading-[1] sm:leading-[0.95] tracking-tighter text-deep max-w-2xl mb-5 sm:mb-7">
                 {{ $hero['headline'] }} <em class="text-sage not-italic">{{ $hero['highlight'] }}</em><br>{{ $hero['suffix'] }}
             </h1>
 
-            <p class="hero-sub text-text-mid max-w-md leading-relaxed mb-9">
+            <p class="hero-sub text-sm sm:text-base text-text-mid max-w-md leading-relaxed mb-6 sm:mb-9">
                 {{ $hero['description'] }}
             </p>
 
-
             {{-- Stats Row --}}
-            <div class="stats-row flex items-center gap-5 mt-3">
+            <div class="stats-row flex items-center gap-3 sm:gap-5 mt-1 sm:mt-3 flex-wrap">
                 @foreach($stats as $stat)
                     <div class="stat-item">
-                        <span class="stat-num font-syne font-bold text-deep text-xl" data-count="{{ $stat['value'] }}" data-suffix="{{ $stat['suffix'] ?? '' }}">{{ $stat['value'] }}</span>
-                        <span class="stat-label text-xs text-text-light">{{ $stat['label'] }}</span>
+                        <span class="stat-num font-syne font-bold text-deep text-lg sm:text-xl" data-count="{{ $stat['value'] }}" data-suffix="{{ $stat['suffix'] ?? '' }}">{{ $stat['value'] }}</span>
+                        <span class="stat-label text-xs text-text-light block">{{ $stat['label'] }}</span>
                     </div>
                     @unless($loop->last)
-                        <div class="stat-sep w-px h-9 bg-forest/10"></div>
+                        <div class="stat-sep w-px h-8 sm:h-9 bg-forest/10 hidden sm:block"></div>
                     @endunless
                 @endforeach
             </div>
-
-
         </div>
 
-        {{-- RIGHT COLUMN: 3D Bento Glassmorphic Overlap --}}
-        <div class="hero-visuals relative h-[400px] lg:h-[500px] w-full flex items-center justify-center">
-            {{-- Decorative Background Orb (Optional glow) --}}
-            <div class="absolute w-72 h-72 bg-sage/10 rounded-full blur-3xl -z-10 animate-pulse-slow"></div>
+        {{-- RIGHT COLUMN: Bento visuals --}}
+        <div class="hero-visuals relative h-[260px] sm:h-[340px] lg:h-[500px] w-full flex items-center justify-center order-first lg:order-last">
+            <div class="absolute w-48 sm:w-72 h-48 sm:h-72 bg-sage/10 rounded-full blur-3xl -z-10 animate-pulse-slow"></div>
 
-            <div class="bento-container relative w-full max-w-[480px] h-full flex flex-col gap-4 lg:gap-6">
+            <div class="bento-container relative w-full max-w-[480px] h-full flex flex-col gap-3 sm:gap-4 lg:gap-6">
 
                 {{-- Bento Card 1 (Top - Large) --}}
                 <div class="bento-card bento-card-1 flex-1 relative w-full rounded-3xl bg-white/70 backdrop-blur-xl border border-white/50 shadow-[0_8px_32px_rgba(0,0,0,0.05)] p-6 overflow-hidden flex flex-col justify-end">
@@ -130,23 +126,22 @@
         </div>
     </div>
 
-    <div class="bento-card card-ai mt-7 mx-3xl">
-    <div class="glass-amber rounded-lg p-6 h-full mx-auto items-center flex flex-col">
+    <div class="search-section mt-6 sm:mt-8 lg:mt-10">
+        <div class="glass-amber rounded-xl sm:rounded-2xl p-4 sm:p-6 mx-0">
              {{-- Search Bar --}}
             <x-search-bar />
 
             {{-- Popular Searches --}}
-            <div class="popular-row flex items-center flex-wrap gap-2.5 mt-14">
-                <span class="popular-label text-xs font-medium text-text-light">Popular:</span>
+            <div class="popular-row flex items-center flex-wrap gap-2 sm:gap-2.5 mt-6 sm:mt-8 lg:mt-10">
+                <span class="popular-label text-xs font-medium text-text-light w-full sm:w-auto mb-1 sm:mb-0">Popular:</span>
                 @foreach($popularSearches as $term)
-                <a href="{{ route('jobs.index', ['q' => $term]) }}" class="pop-tag text-sm px-3.5 py-1.5 bg-mint border border-cream rounded-full text-cream text-text-mid transition-all duration-200 hover:bg-forest hover:text-deep hover:border-mint/30">
+                <a href="{{ route('jobs.index', ['q' => $term]) }}" class="pop-tag text-xs sm:text-sm px-3 sm:px-3.5 py-1.5 bg-mint/15 border border-mint/25 rounded-full text-text-mid transition-all duration-200 hover:bg-forest hover:text-white hover:border-mint/30 active:scale-95">
                     {{ $term }}
                 </a>
                 @endforeach
             </div>
         </div>
     </div>
-</div>
 
 </section>
 

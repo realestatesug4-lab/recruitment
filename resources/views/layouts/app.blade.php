@@ -20,7 +20,7 @@
 
         @stack('head')
     </head>
-    <body class="font-sans antialiased text-text-dark">
+    <body class="font-sans antialiased text-text-dark" data-page="{{ $page ?? 'default' }}">
         <div class="min-h-screen">
             @isset($slot)
                 @include('layouts.navigation')

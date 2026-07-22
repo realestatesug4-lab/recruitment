@@ -1,4 +1,4 @@
-<section class="section py-16 md:py-20">
+<section class="section fade-section py-12 sm:py-16 md:py-20 px-4 sm:px-0">
     <div class="section-label flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-sage mb-3">
         <span class="w-5 h-px bg-sage"></span>
         How It Works

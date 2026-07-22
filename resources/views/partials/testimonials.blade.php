@@ -1,4 +1,4 @@
-<div class="testimonial-strip bg-white/45 backdrop-blur-xl border border-white/70 rounded-2xl p-8 md:p-12 grid grid-cols-1 md:grid-cols-3 gap-8 my-12 shadow-md">
+<div class="testimonial-strip fade-section bg-white/45 backdrop-blur-xl border border-white/70 rounded-xl sm:rounded-2xl p-5 sm:p-8 md:p-12 grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 my-8 sm:my-12 mx-4 sm:mx-0 shadow-md">
     <x-testimonial-card
         quote="I found a Senior DevOps role at a great company within 2 weeks. The AI CV tool made my application stand out."
         name="Kampire A."

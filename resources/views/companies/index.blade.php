@@ -1,16 +1,16 @@
-@extends('layouts.app')
+@extends('layouts.app', ['page' => 'companies'])
 
 @section('title', 'Companies - JobsUG')
 
 @section('content')
-<div class="page-wrap py-12">
-    <section class="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
+<div class="page-wrap py-8 sm:py-12">
+    <section class="fade-section grid gap-6 sm:gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
         <div>
             <div class="inline-flex items-center gap-2 rounded-full bg-mint/10 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-sage">
                 <span class="h-2 w-2 rounded-full bg-mint"></span>
                 Employer directory
             </div>
-            <h1 class="mt-5 max-w-3xl font-syne text-4xl font-bold text-deep md:text-5xl">
+            <h1 class="mt-4 sm:mt-5 max-w-3xl font-syne text-3xl sm:text-4xl font-bold text-deep md:text-5xl leading-tight">
                 Discover companies hiring across Uganda.
             </h1>
             <p class="mt-4 max-w-2xl text-base leading-7 text-text-mid">
@@ -18,17 +18,17 @@
             </p>
         </div>
 
-        <div class="grid grid-cols-3 gap-3">
-            <div class="glass rounded-lg p-4">
+        <div class="grid grid-cols-3 gap-2 sm:gap-3">
+            <div class="glass rounded-lg p-3 sm:p-4">
                 <div class="font-syne text-2xl font-bold text-deep">{{ number_format($viewModel->totalCompanies()) }}</div>
                 <div class="mt-1 text-xs font-semibold uppercase tracking-wide text-text-light">Companies</div>
             </div>
-            <div class="glass rounded-lg p-4">
-                <div class="font-syne text-2xl font-bold text-deep">{{ number_format($viewModel->openRoles()) }}</div>
+            <div class="glass rounded-lg p-3 sm:p-4">
+                <div class="font-syne text-xl sm:text-2xl font-bold text-deep">{{ number_format($viewModel->openRoles()) }}</div>
                 <div class="mt-1 text-xs font-semibold uppercase tracking-wide text-text-light">Open roles</div>
             </div>
-            <div class="glass rounded-lg p-4">
-                <div class="font-syne text-2xl font-bold text-deep">{{ number_format($viewModel->industries()) }}</div>
+            <div class="glass rounded-lg p-3 sm:p-4">
+                <div class="font-syne text-xl sm:text-2xl font-bold text-deep">{{ number_format($viewModel->industries()) }}</div>
                 <div class="mt-1 text-xs font-semibold uppercase tracking-wide text-text-light">Industries</div>
             </div>
         </div>
@@ -36,7 +36,7 @@
 
     <section class="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         @forelse($viewModel->cards() as $company)
-            <a href="{{ route('companies.show', $company['slug']) }}" class="glass group rounded-lg p-5 transition duration-200 hover:-translate-y-1 hover:shadow-xl">
+            <a href="{{ route('companies.show', $company['slug']) }}" class="company-card glass group rounded-xl sm:rounded-2xl p-4 sm:p-5 transition duration-200 hover:-translate-y-0.5 hover:shadow-xl active:scale-[0.99]">
                 <div class="flex items-start gap-4">
                     <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg font-syne text-xl font-bold text-white" style="background: {{ $company['color'] }}">
                         {{ $company['initial'] }}

@@ -1,6 +1,6 @@
 @props(['jobs' => []])
 
-<div class="bento-card card-jobs glass">
+<div class="bento-card card-jobs glass rounded-xl sm:rounded-2xl p-4 sm:p-5">
     <div class="card-tag text-xs font-semibold uppercase tracking-wide text-sage mb-3 flex items-center gap-1.5">
         <span class="w-1 h-1 rounded-full bg-sage"></span>
         Latest Openings
@@ -15,9 +15,9 @@
                 $logoStyle = "background: {$logoBg}; color: {$logoColor};";
             @endphp
 
-            <div class="job-item bg-white/60 border border-white/80 rounded-md p-3.5 flex items-center gap-3.5 transition-all duration-200 cursor-pointer hover:bg-white/85 hover:border-mint/30 hover:translate-x-1">
+            <div class="job-item bg-white/60 border border-white/80 rounded-lg p-3 sm:p-3.5 flex items-center gap-3 sm:gap-3.5 transition-all duration-200 cursor-pointer hover:bg-white/85 hover:border-mint/30 active:scale-[0.99] min-h-[56px]">
                 <div
-                    class="job-logo w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 font-syne font-bold text-sm"
+                    class="job-logo w-9 h-9 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center flex-shrink-0 font-syne font-bold text-xs sm:text-sm"
                     style="{{ $logoStyle }}"
                 >
                     {{ $job['initial'] ?? substr($company, 0, 1) }}

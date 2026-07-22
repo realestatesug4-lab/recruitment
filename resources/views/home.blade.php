@@ -10,7 +10,7 @@
         'popularSearches' => $viewModel->popularSearches(),
     ])
 
-    <section class="mx-auto max-w-7xl px-6 py-10">
+    <section class="fade-section mx-auto max-w-7xl px-4 sm:px-6 py-8 sm:py-10">
         <div class="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl shadow-slate-900/5">
             <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
                 <div class="max-w-3xl">
