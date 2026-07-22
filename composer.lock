@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "09f7dc870cefe57d78c566068576f87d",
+    "content-hash": "bb27725bc0e293ec3873a6948c4be2eb",
     "packages": [
         {
             "name": "5balloons/laravel-smart-ads",
@@ -13125,7 +13125,11 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.4"
+        "php": "^8.4",
+        "ext-exif": "*",
+        "ext-intl": "*",
+        "ext-pgsql": "*",
+        "ext-zip": "*"
     },
     "platform-dev": {},
     "plugin-api-version": "2.9.0"
