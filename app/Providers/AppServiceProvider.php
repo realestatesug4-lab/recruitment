@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\View\Components\SmartAdComponent;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,5 +17,6 @@ class AppServiceProvider extends ServiceProvider
     {
         // Keep this EMPTY for Filament styling
         // Filament handles assets via Vite automatically
+        Blade::component('smart-ad-component', SmartAdComponent::class);
     }
 }

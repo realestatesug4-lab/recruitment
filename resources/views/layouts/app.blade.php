@@ -16,6 +16,8 @@
             'resources/js/app.js',
         ])
 
+        <script src="{{ asset('vendor/smart-ads/js/smart-banner.js') }}" defer></script>
+
         @stack('head')
     </head>
     <body class="font-sans antialiased text-text-dark">

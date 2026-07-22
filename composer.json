@@ -7,6 +7,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.3",
+        "5balloons/laravel-smart-ads": "^1.1",
         "elasticsearch/elasticsearch": "^9.4",
         "filament/filament": "^5.6",
         "flowframe/laravel-trend": "^0.5.0",
