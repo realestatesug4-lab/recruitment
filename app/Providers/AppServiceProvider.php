@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\View\Components\SmartAdComponent;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,6 +16,9 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+            if (app()->environment('production')) {
+            URL::forceScheme('https');
+        }
         // Keep this EMPTY for Filament styling
         // Filament handles assets via Vite automatically
         Blade::component('smart-ad-component', SmartAdComponent::class);
