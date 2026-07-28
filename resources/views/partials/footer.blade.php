@@ -1,62 +1,61 @@
-<footer class="relative z-10 bg-deep text-white/50 pt-14 pb-8 mt-20 rounded-t-2xl">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 pb-10 border-b border-white/10 mb-7">
-            {{-- Brand Column --}}
+<div class="relative z-10 mt-20 rounded-t-2xl bg-deep pt-14 pb-8 text-white/50">
+    <div class="mx-auto max-w-7xl px-6">
+        <div class="mb-7 grid grid-cols-1 gap-12 border-b border-white/10 pb-10 md:grid-cols-2 lg:grid-cols-4">
             <div>
-                <div class="footer-brand font-syne font-extrabold text-2xl text-white/90 flex items-center gap-2 mb-3">
-                    <span class="w-2 h-2 rounded-full bg-mint inline-block"></span>
-                    JobsUG
+                <div class="footer-brand mb-3 flex items-center gap-2 font-syne text-2xl font-extrabold text-white/90">
+                    <svg class="h-6 w-6 text-amber" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+                        <path d="M3 20 L11 6 L16 14 L23 4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="23" cy="4" r="2.4" fill="#ff9900"/>
+                    </svg>
+                    quicklinks.com
                 </div>
-                <p class="text-sm leading-relaxed mb-5 max-w-64">
-                    Uganda's most trusted job marketplace. Connecting talent with opportunity since 2024.
+                <p class="mb-5 max-w-64 text-sm leading-relaxed">
+                    Uganda's fast, low-data discovery layer for jobs, shops, services, and local opportunity.
                 </p>
                 <div class="flex gap-2.5">
-                    @foreach(['in', '𝕏', 'fb'] as $social)
-                    <a href="#" class="w-8 h-8 bg-white/7 rounded-full flex items-center justify-center text-white/50 text-xs hover:bg-white/15 hover:text-white/80 transition-all duration-200">
+                    @foreach(['in', 'x', 'fb'] as $social)
+                    <a href="#" class="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-xs text-white/50 transition-all duration-200 hover:bg-white/15 hover:text-white/80">
                         {{ $social }}
                     </a>
                     @endforeach
                 </div>
             </div>
 
-            {{-- For Seekers --}}
             <div>
-                <h4 class="font-syne font-semibold text-sm text-white/70 uppercase tracking-wide mb-4">For Seekers</h4>
+                <h4 class="mb-4 font-syne text-sm font-semibold uppercase tracking-wide text-white/70">For Searchers</h4>
                 <ul class="space-y-2.5">
-                    @foreach(['Browse Jobs', 'Companies', 'Salary Guide', 'AI Career Tools', 'Career Resources'] as $link)
-                    <li><a href="#" class="text-sm text-white/40 hover:text-white/80 transition-colors duration-200">{{ $link }}</a></li>
+                    @foreach(['Search Jobs', 'Browse Categories', 'SMS/USSD Access', 'AI Career Tools', 'Career Resources'] as $link)
+                    <li><a href="#" class="text-sm text-white/40 transition-colors duration-200 hover:text-white/80">{{ $link }}</a></li>
                     @endforeach
                 </ul>
             </div>
 
-            {{-- For Employers --}}
             <div>
-                <h4 class="font-syne font-semibold text-sm text-white/70 uppercase tracking-wide mb-4">For Employers</h4>
+                <h4 class="mb-4 font-syne text-sm font-semibold uppercase tracking-wide text-white/70">For Business</h4>
                 <ul class="space-y-2.5">
-                    @foreach(['Post a Job', 'Search CVs', 'Company Page', 'Pricing', 'Enterprise'] as $link)
-                    <li><a href="#" class="text-sm text-white/40 hover:text-white/80 transition-colors duration-200">{{ $link }}</a></li>
+                    @foreach(['Post a Listing', 'Advertiser Dashboard', 'Company Page', 'SME Pricing', 'Enterprise'] as $link)
+                    <li><a href="#" class="text-sm text-white/40 transition-colors duration-200 hover:text-white/80">{{ $link }}</a></li>
                     @endforeach
                 </ul>
             </div>
 
-            {{-- Company --}}
             <div>
-                <h4 class="font-syne font-semibold text-sm text-white/70 uppercase tracking-wide mb-4">Company</h4>
+                <h4 class="mb-4 font-syne text-sm font-semibold uppercase tracking-wide text-white/70">Company</h4>
                 <ul class="space-y-2.5">
-                    @foreach(['About Us', 'Blog', 'Privacy Policy', 'Terms of Use', 'Contact'] as $link)
-                    <li><a href="#" class="text-sm text-white/40 hover:text-white/80 transition-colors duration-200">{{ $link }}</a></li>
+                    @foreach(['About Us', 'Blog', 'Trust & Safety', 'Privacy Policy', 'Contact'] as $link)
+                    <li><a href="#" class="text-sm text-white/40 transition-colors duration-200 hover:text-white/80">{{ $link }}</a></li>
                     @endforeach
                 </ul>
             </div>
         </div>
 
-        <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
-            <span>© 2024 JobsUG. All rights reserved.</span>
+        <div class="flex flex-col items-center justify-between gap-4 text-xs md:flex-row">
+            <span>&copy; 2024 quicklinks.com. A project of Imagine Dreams Africa.</span>
             <div class="flex gap-5">
-                <a href="#" class="text-white/30 hover:text-white/60 transition-colors">Privacy</a>
-                <a href="#" class="text-white/30 hover:text-white/60 transition-colors">Terms</a>
-                <a href="#" class="text-white/30 hover:text-white/60 transition-colors">Sitemap</a>
+                <a href="#" class="text-white/30 transition-colors hover:text-white/60">Privacy</a>
+                <a href="#" class="text-white/30 transition-colors hover:text-white/60">Terms</a>
+                <a href="#" class="text-white/30 transition-colors hover:text-white/60">Sitemap</a>
             </div>
         </div>
     </div>
-</footer>
+</div>

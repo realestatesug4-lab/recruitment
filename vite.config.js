@@ -9,7 +9,14 @@ export default defineConfig({
                 'resources/css/filament/admin.css',
                 'resources/js/app.js',
             ],
+            detectTls: false,
             refresh: true,
         }),
-    ]
+    ],
+    server: {
+        host: '127.0.0.1',
+        hmr: {
+            host: '127.0.0.1',
+        },
+    },
 });

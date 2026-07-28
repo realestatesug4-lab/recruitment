@@ -10,26 +10,26 @@ class HomeViewModel
     public function hero(): array
     {
         return [
-            'label' => "Uganda's #1 Job Platform",
-            'headline' => 'Find Your',
-            'highlight' => 'Next Role',
-            'suffix' => 'in Uganda',
-            'description' => 'Connect with top employers across Kampala, Entebbe, and beyond. Thousands of vetted opportunities, one platform.',
+            'label' => 'Live across Kampala, Entebbe, and Jinja',
+            'headline' => 'Type it.',
+            'highlight' => 'Land there.',
+            'suffix' => 'Done.',
+            'description' => "Uganda's fast, low-data way to jobs, companies, and services. No ad-choked detours, no wasted bundle, just the useful page.",
         ];
     }
 
     public function platformStats(): array
     {
         return [
-            ['value' => '12,400+', 'label' => 'Active Jobs'],
-            ['value' => '3,200+', 'label' => 'Companies'],
-            ['value' => '89K+', 'label' => 'Job Seekers'],
+            ['value' => '12400', 'label' => 'Live Listings', 'suffix' => '+'],
+            ['value' => '0.4', 'label' => 'Second Resolve', 'suffix' => 's', 'float' => true],
+            ['value' => '340', 'label' => 'Verified Employers', 'suffix' => '+'],
         ];
     }
 
     public function popularSearches(): array
     {
-        return ['Software Engineer', 'Finance', 'Marketing', 'NGO & Development', 'Healthcare', 'Remote'];
+        return ['Accountant Kampala', 'Boda Services', 'Mobile Money Agent', 'NGO Jobs', 'Remote Work', 'Plumber Near Me'];
     }
 
     public function latestJobs(): array
@@ -55,8 +55,8 @@ class HomeViewModel
                     'remote' => 'badge-blue',
                     default => 'badge-green',
                 },
-                'logo_bg' => 'rgba(82,183,136,0.1)',
-                'logo_color' => $job->company?->color ?? '#1B4332',
+                'logo_bg' => 'rgba(18,58,237,0.10)',
+                'logo_color' => $job->company?->color ?? '#123aed',
                 'initial' => Str::of($job->company?->name ?? $job->title)->substr(0, 1)->upper()->toString(),
             ])
             ->all();
@@ -93,14 +93,14 @@ class HomeViewModel
     public function categories(): array
     {
         return [
-            ['icon' => 'IT', 'name' => 'Technology', 'count' => '2,140'],
-            ['icon' => 'FB', 'name' => 'Finance & Banking', 'count' => '1,830'],
+            ['icon' => 'JB', 'name' => 'Jobs', 'count' => '4,900'],
+            ['icon' => 'SH', 'name' => 'Shops & Products', 'count' => '6,200'],
+            ['icon' => 'SV', 'name' => 'Services', 'count' => '2,100'],
+            ['icon' => 'RE', 'name' => 'Real Estate', 'count' => '890'],
+            ['icon' => 'BD', 'name' => 'Boda Services', 'count' => '740'],
+            ['icon' => 'MM', 'name' => 'Mobile Money', 'count' => '510'],
             ['icon' => 'NG', 'name' => 'NGO & Development', 'count' => '1,520'],
             ['icon' => 'HC', 'name' => 'Healthcare', 'count' => '980'],
-            ['icon' => 'MK', 'name' => 'Marketing', 'count' => '760'],
-            ['icon' => 'ED', 'name' => 'Education', 'count' => '640'],
-            ['icon' => 'EU', 'name' => 'Energy & Utilities', 'count' => '420'],
-            ['icon' => 'CN', 'name' => 'Construction', 'count' => '380'],
         ];
     }
 

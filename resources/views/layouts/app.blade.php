@@ -43,11 +43,12 @@
                     @yield('content')
                 @endisset
             </main>
+
+            <footer>
+                @include('partials.footer')
+            </footer>
         </div>
 
         @stack('scripts')
     </body>
-    <footer>
-        @include('partials.footer')
-    </footer>
 </html>

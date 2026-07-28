@@ -10,8 +10,8 @@
         @foreach($jobs as $job)
             @php
                 $company = $job['company'] ?? '';
-                $logoBg = $job['logo_bg'] ?? 'rgba(82,183,136,0.1)';
-                $logoColor = $job['logo_color'] ?? '#1B4332';
+                $logoBg = $job['logo_bg'] ?? 'rgba(18,58,237,0.10)';
+                $logoColor = $job['logo_color'] ?? '#123aed';
                 $logoStyle = "background: {$logoBg}; color: {$logoColor};";
             @endphp
 

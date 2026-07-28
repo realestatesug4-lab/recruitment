@@ -24,5 +24,11 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       initPageAnimations();
     }
+
+    window.setTimeout(() => {
+      if (window.gsap && window.gsap.core) {
+        window.gsap.core.globals('ScrollTrigger').refresh();
+      }
+    }, 120);
   });
 });

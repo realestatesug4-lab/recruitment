@@ -1,15 +1,18 @@
 <header class="sticky top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4 md:px-6" x-data="{ open: false }" @keydown.escape.window="open = false">
     <nav class="nav-glass rounded-xl flex items-center justify-between px-4 py-3 sm:px-6 sm:py-3.5 transition-all duration-300">
         <a href="{{ route('home') }}" class="font-syne font-extrabold text-lg sm:text-xl text-forest tracking-tight flex items-center gap-2 min-w-0">
-            <span class="w-2 h-2 rounded-full bg-mint inline-block flex-shrink-0"></span>
-            JobsUG
+            <svg class="h-6 w-6 flex-shrink-0 text-amber" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+                <path d="M3 20 L11 6 L16 14 L23 4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="23" cy="4" r="2.4" fill="#ff9900"/>
+            </svg>
+            quicklinks<span class="text-amber">.</span>com
         </a>
 
         <ul class="hidden md:flex gap-1 lg:gap-2 list-none">
             @foreach([
-                ['Find a Job', route('jobs.index')],
+                ['Search', route('jobs.index')],
                 ['Companies', route('companies.index')],
-                ['About Us', route('about')],
+                ['About', route('about')],
                 ['Resources', route('resources')],
             ] as [$label, $href])
                 <li>
@@ -26,7 +29,7 @@
                     Sign in
                 </a>
                 <a href="{{ route('register') }}" class="text-sm font-medium text-white px-4 py-2.5 rounded-full bg-forest hover:bg-sage transition active:scale-[0.98]">
-                    Post a Job &rarr;
+                    Post a job
                 </a>
             @else
                 <a href="{{ route('dashboard') }}" class="text-sm font-medium text-white px-4 py-2.5 rounded-full bg-forest hover:bg-sage transition active:scale-[0.98]">
@@ -78,9 +81,9 @@
     >
         <ul class="py-2">
             @foreach([
-                ['Find a Job', route('jobs.index')],
+                ['Search', route('jobs.index')],
                 ['Companies', route('companies.index')],
-                ['About Us', route('about')],
+                ['About', route('about')],
                 ['Resources', route('resources')],
             ] as [$label, $href])
                 <li>
@@ -97,7 +100,7 @@
         <div class="border-t border-forest/10 px-4 py-4 flex flex-col gap-2">
             @guest
                 <a href="{{ route('register') }}" @click="open = false" class="w-full text-center text-sm font-semibold text-white px-5 py-3 rounded-full bg-forest hover:bg-sage transition active:scale-[0.98]">
-                    Post a Job &rarr;
+                    Post a job
                 </a>
             @endguest
         </div>
