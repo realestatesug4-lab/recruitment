@@ -2,17 +2,26 @@
 
 namespace App\Filament\Admin\Pages;
 
-use App\ViewModels\AdminDashboardViewModel;
-use Filament\Pages\Page;
+use Filament\Pages\Dashboard as BaseDashboard;
+use Filament\Support\Icons\Heroicon;
+use Illuminate\Contracts\Support\Htmlable;
 
-class Dashboard extends Page
+class Dashboard extends BaseDashboard
 {
-    protected string $view = 'filament.pages.admin-dashboard';
+    protected static string | \BackedEnum | null $navigationIcon = Heroicon::OutlinedHome;
 
-    public array $stats = [];
+    protected static ?string $title = 'Dashboard';
 
-    public function mount(): void
+    public function getColumns(): int | array
     {
-        $this->stats = (new AdminDashboardViewModel())->toArray();
+        return [
+            'default' => 1,
+            'lg' => 2,
+        ];
+    }
+
+    public function getTitle(): string | Htmlable
+    {
+        return '';
     }
 }

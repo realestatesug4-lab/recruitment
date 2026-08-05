@@ -1,6 +1,10 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@config '../../tailwind.config.js';
+
+@source '../../resources/views/**/*.blade.php';
+@source '../../resources/js/**/*.js';
+@source '../../app/**/*.php';
+@source '../../routes/**/*.php';
 
 @layer base {
     :root {

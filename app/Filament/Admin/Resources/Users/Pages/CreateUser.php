@@ -8,4 +8,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateUser extends CreateRecord
 {
     protected static string $resource = UserResource::class;
+
+    protected function authorizeAccess(): void
+    {
+        abort_unless(optional(auth()->user())->isSuperAdmin() === true, 403);
+    }
 }

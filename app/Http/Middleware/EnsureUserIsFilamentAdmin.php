@@ -16,15 +16,7 @@ class EnsureUserIsFilamentAdmin
             return redirect()->guest(route('login'));
         }
 
-        $isAdmin = false;
-
-        if (method_exists($user, 'hasRole')) {
-            $isAdmin = $user->hasRole('admin');
-        }
-
-        if (! $isAdmin && isset($user->role) && $user->role === 'admin') {
-            $isAdmin = true;
-        }
+        $isAdmin = method_exists($user, 'isAdmin') ? $user->isAdmin() : false;
 
         if (! $isAdmin) {
             abort(403, 'You do not have access to the admin panel.');

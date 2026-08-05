@@ -58,6 +58,16 @@ class UserResource extends Resource
         ];
     }
 
+    public static function canCreate(): bool
+    {
+        return optional(auth()->user())->isSuperAdmin() === true;
+    }
+
+    public static function canEdit(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return optional(auth()->user())->hasRole('admin') || optional(auth()->user())->isSuperAdmin();
+    }
+
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery()

@@ -2,18 +2,23 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Admin\Widgets\ApplicationTrendsWidget;
+use App\Filament\Admin\Widgets\ApplicationsKanbanWidget;
+use App\Filament\Admin\Widgets\DashboardHeroWidget;
+use App\Filament\Admin\Widgets\KpiGridWidget;
+use App\Filament\Admin\Widgets\PipelineHealthWidget;
+use App\Filament\Admin\Widgets\RecentActivityWidget;
+use App\Filament\Admin\Widgets\SearchStatusWidget;
+use App\Http\Middleware\EnsureUserIsFilamentAdmin;
+use Filament\Enums\ThemeMode;
+use Filament\FontProviders\GoogleFontProvider;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Pages\Dashboard as FilamentDashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets\AccountWidget;
-use Filament\Widgets\FilamentInfoWidget;
-use Filament\Facades\Filament;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\PreventRequestForgery;
@@ -30,22 +35,27 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::hex('#123aed'),
+                'gray' => Color::Slate,
+                'success' => Color::hex('#10b981'),
+                'warning' => Color::hex('#ff9900'),
+                'danger' => Color::hex('#ef4444'),
             ])
-            ->viteTheme('resources/css/filament/admin.css')
+            ->font('DM Sans', provider: GoogleFontProvider::class)
+            ->defaultThemeMode(ThemeMode::Light)
+            ->darkMode(false)
+            ->brandName('CraneLinks Admin')
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\Filament\Admin\Resources')
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\Filament\Admin\Pages')
-            ->pages([
-                \App\Filament\Admin\Pages\Dashboard::class,
-            ])
-            ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\Filament\Admin\Widgets')
             ->widgets([
-                AccountWidget::class,
-                FilamentInfoWidget::class,
-                \App\Filament\Admin\Widgets\ExecutiveOverviewWidget::class,
-                \App\Filament\Admin\Widgets\ThemedStatsWidget::class,
-                \App\Filament\Admin\Widgets\HiringTrendsWidget::class,
-                \App\Filament\Admin\Widgets\ApplicationsKanbanWidget::class,
+                DashboardHeroWidget::class,
+                KpiGridWidget::class,
+                ApplicationTrendsWidget::class,
+                PipelineHealthWidget::class,
+                SearchStatusWidget::class,
+                RecentActivityWidget::class,
+                ApplicationsKanbanWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -60,7 +70,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-                \App\Http\Middleware\EnsureUserIsFilamentAdmin::class,
+                EnsureUserIsFilamentAdmin::class,
             ]);
     }
 }

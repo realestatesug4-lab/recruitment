@@ -13,6 +13,11 @@ class EditUser extends EditRecord
 {
     protected static string $resource = UserResource::class;
 
+    protected function authorizeAccess(): void
+    {
+        abort_unless(optional(auth()->user())->isAdmin() === true, 403);
+    }
+
     protected function getHeaderActions(): array
     {
         return [

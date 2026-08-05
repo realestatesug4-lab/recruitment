@@ -9,7 +9,7 @@ use App\Filament\Admin\Resources\Companies\Pages\ViewCompany;
 use App\Filament\Admin\Resources\Companies\Schemas\CompanyForm;
 use App\Filament\Admin\Resources\Companies\Schemas\CompanyInfolist;
 use App\Filament\Admin\Resources\Companies\Tables\CompaniesTable;
-use App\Models\Company;
+use App\Domain\Companies\Models\Company;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
