@@ -1,18 +1,116 @@
+@import 'tailwindcss';
 @import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
 
 @source '../../../../app/Filament/Admin/**/*';
 @source '../../../../resources/views/filament/**/*';
 
 @theme {
+
+    /*
+    |--------------------------------------------------------------------------
+    | CraneLinks Brand Palette
+    |--------------------------------------------------------------------------
+    */
+
     --color-cream: #faf6ea;
+
     --color-deep: #020821;
+
     --color-forest: #123aed;
+
     --color-sage: #4161f1;
+
     --color-mint: #a0b0f8;
+
     --color-amber: #ff9900;
+
+    --color-orange: #f96706;
+
+    --color-wheat: #e3c782;
+
+    --color-twilight: #000024;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Semantic aliases
+    |--------------------------------------------------------------------------
+    */
+
+    --color-background: var(--color-cream);
+
+    --color-surface: #ffffff;
+
+    --color-primary: var(--color-forest);
+
+    --color-secondary: var(--color-sage);
+
+    --color-accent: var(--color-amber);
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Text
+    |--------------------------------------------------------------------------
+    */
+
+    --color-text: var(--color-deep);
+
     --color-text-mid: #33406f;
+
     --color-text-light: #7189f4;
-    --font-syne: 'Syne', ui-sans-serif, system-ui, sans-serif;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Fonts
+    |--------------------------------------------------------------------------
+    */
+
+    --font-sans:
+        "DM Sans",
+        ui-sans-serif,
+        system-ui,
+        sans-serif;
+
+    --font-syne:
+        "Syne",
+        ui-sans-serif,
+        system-ui,
+        sans-serif;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Radius
+    |--------------------------------------------------------------------------
+    */
+
+    --radius-card: 1.5rem;
+
+    --radius-panel: 1.75rem;
+
+    --radius-pill: 9999px;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Shadows
+    |--------------------------------------------------------------------------
+    */
+
+    --shadow-soft:
+        0 10px 30px rgba(2,8,33,.06);
+
+    --shadow-card:
+        0 18px 50px rgba(2,8,33,.08);
+
+    --shadow-floating:
+        0 24px 70px rgba(2,8,33,.12);
+
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap');
@@ -43,61 +141,152 @@
 
 @layer components {
     .admin-card {
-        @apply overflow-hidden rounded-3xl border border-slate-200/70 bg-white/95 shadow-[0_10px_30px_rgba(2,8,33,0.06)];
+        border-radius: 1.5rem;
+        overflow: hidden;
+        border: 1px solid rgba(226, 232, 240, 0.7);
+        background: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 10px 30px rgba(2, 8, 33, 0.06);
     }
 
     .admin-card-padded {
-        @apply admin-card p-4 sm:p-6;
+        padding: 1rem;
     }
 
     .admin-kicker {
-        @apply text-xs font-semibold uppercase tracking-[0.2em] text-text-light;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        color: var(--color-text-light);
     }
 
     .admin-title {
-        @apply font-syne text-lg font-semibold text-deep sm:text-xl;
+        font-family: var(--font-syne);
+        font-size: 1.125rem;
+        font-weight: 600;
+        line-height: 1.4;
+        color: var(--color-deep);
     }
 
     .admin-subtitle {
-        @apply text-sm leading-6 text-text-mid;
+        font-size: 0.875rem;
+        line-height: 1.5rem;
+        color: var(--color-text-mid);
     }
 
     .admin-stat-value {
-        @apply font-syne text-2xl font-bold text-deep sm:text-3xl;
+        font-family: var(--font-syne);
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1.2;
+        color: var(--color-deep);
     }
 
     .admin-badge {
-        @apply shrink-0 rounded-full px-3 py-1 text-xs font-semibold uppercase;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        line-height: 1;
     }
 
     .admin-badge-forest {
-        @apply admin-badge bg-forest/10 text-forest;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+
+        background: rgba(18, 58, 237, 0.10);
+        color: var(--color-forest);
     }
 
     .admin-badge-mint {
-        @apply admin-badge bg-mint/10 text-sage;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+
+        background: rgba(160, 176, 248, 0.15);
+        color: var(--color-sage);
     }
 
     .admin-badge-slate {
-        @apply admin-badge bg-slate-100 text-slate-600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+
+        background: #f1f5f9;
+        color: #475569;
     }
 
     .admin-panel-surface {
-        @apply rounded-2xl border border-slate-200/70 bg-slate-50/80 p-4;
+        border-radius: 1rem;
+        border: 1px solid rgba(226, 232, 240, 0.7);
+        background: rgba(248, 250, 252, 0.8);
+        padding: 1rem;
     }
 
     .admin-interactive-row {
-        @apply block rounded-2xl border border-slate-200/70 bg-slate-50 p-3 transition sm:p-4;
+        display: block;
+        border-radius: 1rem;
+        border: 1px solid rgba(226, 232, 240, 0.7);
+        background: #f8fafc;
+        padding: 0.75rem;
+        transition:
+            background-color .2s ease,
+            border-color .2s ease,
+            box-shadow .2s ease,
+            transform .2s ease;
+    }
+
+    @media (min-width: 640px) {
+        .admin-card-padded {
+            padding: 1.5rem;
+        }
+
+        .admin-title {
+            font-size: 1.25rem;
+        }
+
+        .admin-stat-value {
+            font-size: 1.875rem;
+        }
+
+        .admin-interactive-row {
+            padding: 1rem;
+        }
     }
 
     @media (hover: hover) {
         .admin-interactive-row:hover {
-            @apply border-forest/40 bg-white;
+            border-color: rgba(18, 58, 237, 0.4);
+            background: #ffffff;
         }
 
         .admin-card-lift:hover {
             transform: translateY(-2px);
-            box-shadow: 0 20px 55px rgba(2, 8, 33, 0.1);
+            box-shadow: 0 20px 55px rgba(2, 8, 33, 0.10);
         }
     }
 }

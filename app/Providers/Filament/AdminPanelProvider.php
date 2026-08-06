@@ -41,7 +41,7 @@ class AdminPanelProvider extends PanelProvider
                 'warning' => Color::hex('#ff9900'),
                 'danger' => Color::hex('#ef4444'),
             ])
-            ->font('DM Sans', provider: GoogleFontProvider::class)
+            ->font('Inter', provider: GoogleFontProvider::class)
             ->defaultThemeMode(ThemeMode::Light)
             ->darkMode(false)
             ->brandName('CraneLinks Admin')
