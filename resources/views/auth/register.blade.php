@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="mb-6">
         <h1 class="font-syne text-3xl font-bold text-deep">{{ __('Create your account') }}</h1>
-        <p class="mt-2 text-sm text-text-mid">{{ __('Join JobsUG to apply for roles or manage hiring activity.') }}</p>
+        <p class="mt-2 text-sm text-text-mid">{{ __('Join CraneLinks to apply for roles or manage hiring activity.') }}</p>
     </div>
 
     <form method="POST" action="{{ route('register') }}">

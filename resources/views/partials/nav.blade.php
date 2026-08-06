@@ -1,11 +1,24 @@
 <header class="sticky top-0 z-50 px-3 pt-3 sm:px-4 sm:pt-4 md:px-6" x-data="{ open: false }" @keydown.escape.window="open = false">
     <nav class="nav-glass rounded-xl flex items-center justify-between px-4 py-3 sm:px-6 sm:py-3.5 transition-all duration-300">
-        <a href="{{ route('home') }}" class="font-syne font-extrabold text-lg sm:text-xl text-forest tracking-tight flex items-center gap-2 min-w-0">
-            <svg class="h-6 w-6 flex-shrink-0 text-amber" viewBox="0 0 26 26" fill="none" aria-hidden="true">
-                <path d="M3 20 L11 6 L16 14 L23 4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                <circle cx="23" cy="4" r="2.4" fill="#ff9900"/>
-            </svg>
-            quicklinks<span class="text-amber">.</span>com
+        <a href="{{ route('home') }}" class="flex items-center gap-3 group">
+    <!-- Logo -->
+            <div class="h-11 w-11 rounded-xl overflow-hidden bg-white shadow-sm ring-1 ring-gray-200 transition-transform duration-300 group-hover:scale-105">
+                <img
+                    src="{{ asset('images/cranelinks.png') }}"
+                    alt="CraneLinks Logo"
+                    class="h-full w-full object-cover"
+                >
+            </div>
+
+            <!-- Brand -->
+            {{-- <div class="flex flex-col leading-none">
+                <span class="font-syne text-xl font-extrabold tracking-tight text-forest">
+                    QuickLinks
+                </span>
+                <span class="text-xs uppercase tracking-[0.25em] text-gray-500">
+                    Opportunity Marketplace
+                </span>
+            </div> --}}
         </a>
 
         <ul class="hidden md:flex gap-1 lg:gap-2 list-none">

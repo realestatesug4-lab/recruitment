@@ -2,13 +2,26 @@
     <div class="mx-auto max-w-7xl px-6">
         <div class="mb-7 grid grid-cols-1 gap-12 border-b border-white/10 pb-10 md:grid-cols-2 lg:grid-cols-4">
             <div>
-                <div class="footer-brand mb-3 flex items-center gap-2 font-syne text-2xl font-extrabold text-white/90">
-                    <svg class="h-6 w-6 text-amber" viewBox="0 0 26 26" fill="none" aria-hidden="true">
-                        <path d="M3 20 L11 6 L16 14 L23 4" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                        <circle cx="23" cy="4" r="2.4" fill="#ff9900"/>
-                    </svg>
-                    quicklinks.com
-                </div>
+                <a href="{{ route('home') }}" class="flex items-center gap-3 group">
+                 <!-- Logo -->
+                    <div class="h-11 w-11 rounded-xl overflow-hidden bg-white shadow-sm ring-1 ring-gray-200 transition-transform duration-300 group-hover:scale-105">
+                        <img
+                            src="{{ asset('images/cranelinks.png') }}"
+                            alt="QuickLinks Logo"
+                            class="h-full w-full object-cover"
+                        >
+                    </div>
+
+                    <!-- Brand -->
+                    <div class="flex flex-col leading-none">
+                        <span class="font-syne text-xl font-extrabold tracking-tight text-forest">
+                            CraneLinks
+                        </span>
+                        <span class="text-xs uppercase tracking-[0.25em] text-gray-500">
+                            One Click Away
+                        </span>
+                    </div>
+                </a>
                 <p class="mb-5 max-w-64 text-sm leading-relaxed">
                     Uganda's fast, low-data discovery layer for jobs, shops, services, and local opportunity.
                 </p>

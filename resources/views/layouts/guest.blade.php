@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'JobsUG') }}</title>
+        <title>{{ config('app.name', 'CraneLinks') }}</title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,9 +21,25 @@
         <main class="min-h-screen px-6 py-8">
             <div class="mx-auto grid min-h-[calc(100vh-4rem)] max-w-6xl items-center gap-8 lg:grid-cols-[0.9fr_1.1fr]">
                 <section class="hidden lg:block">
-                    <a href="{{ route('home') }}" class="inline-flex items-center gap-3">
-                        <x-application-logo class="h-12 w-12 text-forest" />
-                        <span class="font-syne text-2xl font-bold text-deep">JobsUG</span>
+                    <a href="{{ route('home') }}" class="flex items-center gap-3 group">
+                        <!-- Logo -->
+                        <div class="h-11 w-11 rounded-xl overflow-hidden bg-white shadow-sm ring-1 ring-gray-200 transition-transform duration-300 group-hover:scale-105">
+                            <img
+                                src="{{ asset('images/cranelinks.png') }}"
+                                alt="QuickLinks Logo"
+                                class="h-full w-full object-cover"
+                            >
+                        </div>
+
+                        <!-- Brand -->
+                        <div class="flex flex-col leading-none">
+                            <span class="font-syne text-xl font-extrabold tracking-tight text-forest">
+                                CraneLinks
+                            </span>
+                            <span class="text-xs uppercase tracking-[0.25em] text-gray-500">
+                                One Click Away
+                            </span>
+                        </div>
                     </a>
                     <h1 class="mt-10 max-w-xl font-syne text-5xl font-bold leading-tight text-deep">
                         Find the right work, or the right hire, faster.
@@ -49,11 +65,28 @@
 
                 <section class="mx-auto w-full max-w-md">
                     <div class="mb-6 flex items-center justify-center lg:hidden">
-                        <a href="{{ route('home') }}" class="inline-flex items-center gap-3">
-                            <x-application-logo class="h-10 w-10 text-forest" />
-                            <span class="font-syne text-xl font-bold text-deep">JobsUG</span>
-                        </a>
-                    </div>
+
+                            <a href="{{ route('home') }}" class="flex items-center gap-3 group">
+                                <!-- Logo -->
+                                <div class="h-11 w-11 rounded-xl overflow-hidden bg-white shadow-sm ring-1 ring-gray-200 transition-transform duration-300 group-hover:scale-105">
+                                    <img
+                                        src="{{ asset('images/cranelinks.png') }}"
+                                        alt="CraneLinks Logo"
+                                        class="h-full w-full object-cover"
+                                    >
+                                </div>
+
+                                <!-- Brand -->
+                                <div class="flex flex-col leading-none">
+                                    <span class="font-syne text-xl font-extrabold tracking-tight text-forest">
+                                        CraneLinks
+                                    </span>
+                                    <span class="text-xs uppercase tracking-[0.25em] text-gray-500">
+                                        One Click Away
+                                    </span>
+                                </div>
+                            </a>
+
 
                     <div class="glass rounded-lg p-6 shadow-xl sm:p-8">
                         {{ $slot }}
