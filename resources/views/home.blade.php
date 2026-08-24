@@ -1,6 +1,6 @@
 @extends('layouts.app', ['page' => 'home'])
 
-@section('title', 'quicklinks.com - Uganda\'s Fast Discovery Layer')
+@section('title', 'CraneLinks - One Click Away')
 
 @section('content')
 <div class="page-wrap">
@@ -17,7 +17,7 @@
                 <span><b class="text-forest">340+</b> verified employers</span>
                 <span><b class="text-forest">0.4s</b> average resolve</span>
                 <span><b class="text-forest">Low-data</b> by default</span>
-                <span><b class="text-forest">SMS/USSD</b> ready</span>
+                {{-- <span><b class="text-forest">SMS/USSD</b> ready</span> --}}
                 <span><b class="text-forest">12,400+</b> live listings</span>
                 <span><b class="text-forest">340+</b> verified employers</span>
                 <span><b class="text-forest">0.4s</b> average resolve</span>
@@ -33,7 +33,7 @@
 
     @include('partials.how-it-works')
 
-    <section class="fade-section mx-auto max-w-7xl px-4 sm:px-6 py-8 sm:py-10">
+    {{-- <section class="fade-section mx-auto max-w-7xl px-4 sm:px-6 py-8 sm:py-10">
         <div class="sponsored-panel rounded-2xl border border-amber/35 bg-white/70 p-6 shadow-xl shadow-forest/5 backdrop-blur sm:p-8">
             <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
                 <div class="max-w-3xl">
@@ -51,7 +51,7 @@
                 <x-smart-ad-component slug="old-mutual-unit-trust-fund" />
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <x-bento.stats-card />
 
@@ -59,9 +59,9 @@
 
     @include('partials.testimonials')
 
-    @include('partials.companies-strip', [
+    {{-- @include('partials.companies-strip', [
         'companies' => $viewModel->trustedCompanies(),
-    ])
+    ]) --}}
 
 </div>
 @endsection

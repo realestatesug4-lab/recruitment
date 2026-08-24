@@ -40,4 +40,15 @@ return [
         'index' => env('ELASTICSEARCH_INDEX', 'job_posts'),
     ],
 
+    'revive' => [
+        'url' => env('REVIVE_URL', 'http://localhost/revive'),
+        'username' => env('REVIVE_USERNAME', 'admin'),
+        'password' => env('REVIVE_PASSWORD', 'password'),
+        'enabled' => env('REVIVE_ENABLED', false),
+    ],
+
+    'anthropic' => [
+        'key' => env('ANTHROPIC_API_KEY'),
+    ],
+
 ];

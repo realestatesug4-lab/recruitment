@@ -133,11 +133,11 @@ function initResolverDemo() {
   const title = document.querySelector('.resolver-title')
   const meta = document.querySelector('.resolver-meta')
 
-  window.clearInterval(window.quicklinksTimerInterval)
-  window.clearInterval(window.quicklinksResolverInterval)
+  window.clearInterval(window.cranelinksTimerInterval)
+  window.clearInterval(window.cranelinksResolverInterval)
 
   if (timer) {
-    window.quicklinksTimerInterval = window.setInterval(() => {
+    window.cranelinksTimerInterval = window.setInterval(() => {
       timer.textContent = `${(0.28 + Math.random() * 0.22).toFixed(2)}s`
     }, 2600)
   }
@@ -151,7 +151,7 @@ function initResolverDemo() {
   ]
 
   let index = 0
-  window.quicklinksResolverInterval = window.setInterval(() => {
+  window.cranelinksResolverInterval = window.setInterval(() => {
     index = (index + 1) % items.length
     const nodes = [query, title, meta]
 

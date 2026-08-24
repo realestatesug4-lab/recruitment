@@ -22,7 +22,7 @@ class SeekerDashboardViewModelTest extends TestCase
         $stats = $viewModel->stats();
 
         $this->assertSame('Profile', $stats[2]['label']);
-        $this->assertIsInt($stats[2]['value']);
-        $this->assertSame(24, $stats[2]['value']);
+        // With null profile, profileCompletion() returns 15, rendered as '15%'
+        $this->assertSame('15%', $stats[2]['value']);
     }
 }

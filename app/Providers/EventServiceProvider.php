@@ -10,8 +10,8 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\ApplicationSubmitted::class => [
             \App\Listeners\NotifyEmployerOfApplication::class,
             \App\Listeners\NotifyCandidateOfSubmission::class,
+            \App\Listeners\ScoreCandidateOnApplication::class,
             \App\Listeners\UpdateApplicationAnalytics::class,
-            \App\Events\RunAiScoring::class,
             \App\Listeners\UpdateSearchIndex::class,
             \App\Listeners\IndexApplicationInSearch::class,
         ],

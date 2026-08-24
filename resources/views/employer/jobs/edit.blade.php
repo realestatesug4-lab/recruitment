@@ -1,6 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
-@section('title', 'Edit Job - JobsUG')
+@section('title', 'Edit Job — CraneLinks')
+@section('page_title', 'Edit Job')
 
 @section('content')
 @php($model = $job->job)

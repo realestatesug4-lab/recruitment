@@ -1,9 +1,9 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Actions\SubmitApplicationAction;
 use App\Domain\Jobs\Models\Job;
 use App\Domain\Applications\Models\Application;
-use App\Events\ApplicationSubmitted;
 use App\Domain\Applications\Enums\ApplicationStatus;
 use App\Http\Requests\StoreApplicationRequest;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +27,7 @@ class SeekerApplicationController extends Controller
         ]);
     }
 
-    public function store(Job $job, StoreApplicationRequest $request): RedirectResponse
+    public function store(Job $job, StoreApplicationRequest $request, SubmitApplicationAction $action): RedirectResponse
     {
         $existingApplication = Application::where('job_id', $job->id)
             ->where('seeker_id', Auth::id())
@@ -39,28 +39,35 @@ class SeekerApplicationController extends Controller
                 ->with('success', 'You have already applied for this job.');
         }
 
-        $resumePath = $request->file('resume')?->store('resumes', 'public')
-            ?? Auth::user()->seekerProfile?->resume_url;
+        $resumePath = $request->file('resume')?->store('resumes', 'public');
 
-        $application = Application::updateOrCreate([
-            'job_id' => $job->id,
-            'seeker_id' => Auth::id(),
-        ], [
-            'cover_letter' => $request->input('cover_letter'),
-            'resume_path' => $resumePath,
-            'status' => ApplicationStatus::SUBMITTED,
-            'applied_at' => now(),
-        ]);
+        $action->execute(
+            job: $job,
+            seeker: Auth::user(),
+            coverLetter: $request->input('cover_letter'),
+            resumePath: $resumePath,
+        );
 
-        event(new ApplicationSubmitted($application));
-
-        return redirect()->route('seeker.applications.thankyou', $job->slug)->with('success', 'Your application has been submitted.');
+        return redirect()
+            ->route('seeker.applications.thankyou', $job->slug)
+            ->with('success', 'Your application has been submitted.');
     }
 
     public function thankyou(Job $job): View
     {
         return view('seeker.applications.thankyou', [
             'job' => $job,
+        ]);
+    }
+
+    public function show(Application $application): View
+    {
+        abort_if($application->seeker_id !== Auth::id(), 403);
+
+        $application->load(['job.company', 'job.skills', 'statusHistory.changedBy']);
+
+        return view('seeker.applications.show', [
+            'application' => $application,
         ]);
     }
 

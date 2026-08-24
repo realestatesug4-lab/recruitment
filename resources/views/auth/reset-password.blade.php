@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="mb-6">
         <h1 class="font-syne text-3xl font-bold text-deep">{{ __('Choose a new password') }}</h1>
-        <p class="mt-2 text-sm text-text-mid">{{ __('Use a strong password to protect your JobsUG account.') }}</p>
+        <p class="mt-2 text-sm text-text-mid">{{ __('Use a strong password to protect your CraneLinks account.') }}</p>
     </div>
 
     <form method="POST" action="{{ route('password.store') }}">

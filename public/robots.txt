@@ -1,2 +1,11 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /admin/
+Disallow: /employer/
+Disallow: /seeker/
+Disallow: /api/
+Disallow: /livewire/
+Disallow: /storage/
+Disallow: /smart-ad-manager/
+
+Sitemap: https://cranelinks.com/sitemap.xml

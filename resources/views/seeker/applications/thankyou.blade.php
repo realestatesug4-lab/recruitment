@@ -1,14 +1,27 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
+
+@section('title', 'Application Submitted — CraneLinks')
+@section('page_title', 'Application Submitted')
 
 @section('content')
-<div class="max-w-4xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-    <div class="glass rounded-3xl p-10 text-center shadow-lg">
-        <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-mint/10 text-4xl mb-6">✅</div>
-        <h1 class="text-4xl font-syne font-bold text-deep mb-4">Application sent!</h1>
-        <p class="text-text-mid max-w-2xl mx-auto mb-8">Your application for <strong>{{ $job->title }}</strong> at <strong>{{ $job->company->name }}</strong> is on its way. The hiring team will review it and we’ll notify you when there’s an update.</p>
-        <div class="flex flex-col sm:flex-row justify-center gap-3">
-            <a href="{{ route('jobs.show', $job->slug) }}" class="btn-mint bg-mint text-forest font-semibold px-6 py-3 rounded-full hover:bg-[#6dc99a] transition">View job</a>
-            <a href="{{ route('jobs.index') }}" class="rounded-full border border-gray-200 px-6 py-3 text-sm font-medium text-deep hover:bg-gray-50 transition">Browse more roles</a>
+<div class="px-4 sm:px-6 lg:px-8 py-16">
+    <div class="mx-auto max-w-xl text-center">
+        <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100">
+            <svg class="h-8 w-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        </div>
+
+        <h1 class="mt-6 text-2xl font-bold text-gray-900">Application submitted!</h1>
+        <p class="mt-2 text-sm text-gray-500">
+            Your application for <span class="font-semibold text-gray-900">{{ $job->title }}</span> at
+            <span class="font-semibold text-gray-900">{{ $job->company->name ?? 'the company' }}</span>
+            has been sent. We will notify you when the hiring team updates your status.
+        </p>
+
+        <div class="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+            <a href="{{ route('seeker.applications.progress') }}" class="rounded-lg bg-forest px-5 py-2.5 text-sm font-semibold text-white hover:bg-sage transition">View my applications</a>
+            <a href="{{ route('jobs.index') }}" class="rounded-lg border border-gray-300 px-5 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition">Browse more jobs</a>
         </div>
     </div>
 </div>

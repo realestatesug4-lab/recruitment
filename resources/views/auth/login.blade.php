@@ -1,7 +1,7 @@
 <x-guest-layout>
     <div class="mb-6">
         <h1 class="font-syne text-3xl font-bold text-deep">{{ __('Welcome back') }}</h1>
-        <p class="mt-2 text-sm text-text-mid">{{ __('Sign in to continue to your JobsUG workspace.') }}</p>
+        <p class="mt-2 text-sm text-text-mid">{{ __('Sign in to continue to your CraneLinks workspace.') }}</p>
     </div>
 
     <!-- Session Status -->
@@ -50,7 +50,7 @@
         </div>
 
         <p class="mt-6 text-center text-sm text-text-mid">
-            {{ __('New to JobsUG?') }}
+            {{ __('New to CraneLinks?') }}
             <a href="{{ route('register') }}" class="font-semibold text-sage hover:text-forest">{{ __('Create an account') }}</a>
         </p>
     </form>

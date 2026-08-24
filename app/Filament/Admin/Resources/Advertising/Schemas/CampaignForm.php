@@ -3,18 +3,18 @@
 namespace App\Filament\Admin\Resources\Advertising\Schemas;
 
 use App\Domain\Advertising\Models\Advertiser;
-use Filament\Schemas\Components\Grid;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\DateTimePickerField;
 use Filament\Schemas\Schema;
 
 class CampaignForm
 {
     public static function configure(Schema $schema): Schema
     {
-        return $schema->schema([
+        return $schema->components([
             Select::make('advertiser_id')
                 ->label('Advertiser')
                 ->options(Advertiser::query()->pluck('name', 'id'))
@@ -31,13 +31,13 @@ class CampaignForm
                 ])
                 ->required(),
             TextInput::make('objective')->maxLength(255),
-            Grid::make(2)->schema([
+            Grid::make(2)->components([
                 TextInput::make('budget_total')->numeric()->required(),
                 TextInput::make('budget_spent')->numeric()->required()->default(0),
             ]),
-            Grid::make(2)->schema([
-                TextInput::make('start_at')->type('datetime-local')->nullable(),
-                TextInput::make('end_at')->type('datetime-local')->nullable(),
+            Grid::make(2)->components([
+                DateTimePickerField::make('start_at')->nullable(),
+                DateTimePickerField::make('end_at')->nullable(),
             ]),
             Select::make('status')
                 ->options([

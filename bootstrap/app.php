@@ -6,7 +6,7 @@ use App\Console\Commands\ReindexJobsToElasticsearch;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -24,14 +24,17 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->trustProxies(
             at: '*',
             headers:
-                Request::HEADER_X_FORWARDED_FOR |
-                Request::HEADER_X_FORWARDED_HOST |
-                Request::HEADER_X_FORWARDED_PORT |
-                Request::HEADER_X_FORWARDED_PROTO
+                SymfonyRequest::HEADER_X_FORWARDED_FOR |
+                SymfonyRequest::HEADER_X_FORWARDED_HOST |
+                SymfonyRequest::HEADER_X_FORWARDED_PORT |
+                SymfonyRequest::HEADER_X_FORWARDED_PROTO
         );
+
+        // Security headers for all responses
+        $middleware->append(\App\Http\Middleware\SecurityHeaders::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
-            fn (Request $request) => $request->is('api/*'),
+            fn (\Illuminate\Http\Request $request) => $request->is('api/*'),
         );
     })->create();

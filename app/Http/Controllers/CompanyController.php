@@ -51,6 +51,17 @@ class CompanyController extends Controller
         return redirect()->route('companies.show', $company)->with('success', 'Company updated.');
     }
 
+    public function edit()
+    {
+        $company = Auth::user()?->employerProfile?->company;
+
+        if (! $company) {
+            abort(403);
+        }
+
+        return view('employer.company.edit', compact('company'));
+    }
+
     public function updateForEmployer(UpdateCompanyRequest $request): RedirectResponse
     {
         $company = Auth::user()?->employerProfile?->company;
@@ -67,7 +78,7 @@ class CompanyController extends Controller
 
         $company->update($data);
 
-        return redirect()->route('employer.dashboard')->with('success', 'Company profile updated.');
+        return redirect()->route('employer.company.edit')->with('success', 'Company profile updated.');
     }
 
     public function destroy(Company $company): RedirectResponse

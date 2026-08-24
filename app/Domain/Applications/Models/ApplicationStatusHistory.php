@@ -12,7 +12,7 @@ class ApplicationStatusHistory extends Model
 
     protected $table = 'application_status_history';
 
-    protected $fillable = ['application_id', 'old_status', 'new_status', 'changed_by'];
+    protected $fillable = ['application_id', 'old_status', 'new_status', 'note', 'changed_by'];
 
     public function application(): BelongsTo
     {

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Auth\AdminRegistrationController;
+use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -18,11 +18,42 @@ Route::middleware('guest')->group(function () {
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 
-    Route::get('admin/register', [AdminRegistrationController::class, 'create'])
-        ->name('admin.register');
+    // OTP-based admin authentication
+    Route::prefix('admin')->name('admin.')->middleware('throttle:10,1')->group(function () {
+        // Admin Login
+        Route::get('login', [AdminAuthController::class, 'loginShow'])
+            ->name('login');
 
-    Route::post('admin/register', [AdminRegistrationController::class, 'store'])
-        ->name('admin.register.store');
+        Route::post('login', [AdminAuthController::class, 'requestOtp'])
+            ->middleware('throttle:3,1')
+            ->name('request-otp');
+
+        Route::get('login/verify', [AdminAuthController::class, 'verifyShow'])
+            ->name('login.verify');
+
+        Route::post('login/verify', [AdminAuthController::class, 'verifyOtp'])
+            ->middleware('throttle:5,1')
+            ->name('verify-otp');
+
+        Route::post('login/resend', [AdminAuthController::class, 'resendOtp'])
+            ->middleware('throttle:2,1')
+            ->name('resend-otp');
+
+        // Admin Registration
+        Route::get('register', [AdminAuthController::class, 'registerShow'])
+            ->name('register');
+
+        Route::post('register', [AdminAuthController::class, 'requestRegistrationOtp'])
+            ->middleware('throttle:3,1')
+            ->name('request-register-otp');
+
+        Route::get('register/verify', [AdminAuthController::class, 'registerVerifyShow'])
+            ->name('register.verify');
+
+        Route::post('register/verify', [AdminAuthController::class, 'verifyRegistrationOtp'])
+            ->middleware('throttle:5,1')
+            ->name('verify-register-otp');
+    });
 
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');

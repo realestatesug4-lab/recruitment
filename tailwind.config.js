@@ -18,7 +18,7 @@ export default {
             fontFamily: {
                 sans: ['DM Sans', ...defaultTheme.fontFamily.sans],
                 dm: ['DM Sans', ...defaultTheme.fontFamily.sans],
-                syne: ['Syne', ...defaultTheme.fontFamily.sans],
+                syne: ['Manrope', ...defaultTheme.fontFamily.sans],
             },
             colors: {
                 cream: '#faf6ea',

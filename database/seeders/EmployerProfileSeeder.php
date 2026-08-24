@@ -35,7 +35,7 @@ class EmployerProfileSeeder extends Seeder
                         'company_id' => $company->id,
                         'job_title' => 'Hiring Manager',
                         'phone' => null,
-                        'bio' => 'Managing hiring activity on JobsUG.',
+                        'bio' => 'Managing hiring activity on CraneLinks.',
                     ],
                 );
             });

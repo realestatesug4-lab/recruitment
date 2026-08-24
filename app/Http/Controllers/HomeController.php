@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\ViewModels\HomeViewModel;
+use App\ViewModels\ResourcesViewModel;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -21,6 +22,8 @@ class HomeController extends Controller
 
     public function resources(): View
     {
-        return view('resources');
+        return view('resources', [
+            'viewModel' => new ResourcesViewModel(),
+        ]);
     }
 }

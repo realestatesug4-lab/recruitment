@@ -19,7 +19,7 @@
                     type="search"
                     inputmode="search"
                     placeholder="{{ $placeholder }}"
-                    aria-label="Search quicklinks"
+                    aria-label="Search CraneLinks"
                     class="flex-1 min-w-0 ml-2.5 bg-transparent border-none outline-none text-sm text-deep placeholder-text-light font-dm focus:ring-0"
                 >
             </div>

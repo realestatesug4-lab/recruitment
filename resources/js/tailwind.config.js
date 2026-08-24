@@ -4,7 +4,7 @@ export default {
     extend: {
         // To be changed to mark brand fonts if there is any
       fontFamily: {
-        syne: ['Syne', 'sans-serif'],
+        syne: ['Manrope', 'sans-serif'],
         dm:   ['DM Sans', 'sans-serif'],
       },
       // to be changed to matvh brand colours incase there is any.

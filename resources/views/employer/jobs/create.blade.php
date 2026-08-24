@@ -1,6 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
-@section('title', 'Create Job - JobsUG')
+@section('title', 'Post a Job — CraneLinks')
+@section('page_title', 'Post a Job')
 
 @section('content')
 <div class="page-wrap py-10">

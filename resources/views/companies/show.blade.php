@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $viewModel->name() . ' - JobsUG')
+@section('title', $viewModel->name() . ' — CraneLinks')
 
 @section('content')
 @php($company = $viewModel->summary())

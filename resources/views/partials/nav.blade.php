@@ -13,7 +13,7 @@
             <!-- Brand -->
             {{-- <div class="flex flex-col leading-none">
                 <span class="font-syne text-xl font-extrabold tracking-tight text-forest">
-                    QuickLinks
+                    CraneLinks
                 </span>
                 <span class="text-xs uppercase tracking-[0.25em] text-gray-500">
                     Opportunity Marketplace

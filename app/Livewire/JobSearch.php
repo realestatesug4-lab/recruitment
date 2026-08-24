@@ -2,7 +2,7 @@
 
 namespace App\Livewire;
 
-use App\Models\Job;
+use App\Domain\Jobs\Models\Job;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -33,7 +33,7 @@ class JobSearch extends Component
         $jobs = Job::query()
             ->when($this->query,    fn($q) => $q->search($this->query))
             ->when($this->location, fn($q) => $q->where('location', 'like', "%{$this->location}%"))
-            ->when($this->types,    fn($q) => $q->whereIn('type', $this->types))
+            ->when($this->types,    fn($q) => $q->whereIn('job_type', $this->types))
             ->when($this->salaryMax,fn($q) => $q->where('salary_max', '<=', $this->salaryMax))
             ->when($this->sort === 'date',        fn($q) => $q->latest())
             ->when($this->sort === 'salary_desc', fn($q) => $q->orderByDesc('salary_max'))

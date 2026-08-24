@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap');
 @import 'tailwindcss';
 @import '../../../../vendor/filament/filament/resources/css/theme.css';
 
@@ -77,7 +78,7 @@
         sans-serif;
 
     --font-syne:
-        "Syne",
+        "Manrope",
         ui-sans-serif,
         system-ui,
         sans-serif;
@@ -112,8 +113,6 @@
         0 24px 70px rgba(2,8,33,.12);
 
 }
-
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&display=swap');
 
 @layer base {
     :root {

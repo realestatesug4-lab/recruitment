@@ -38,7 +38,7 @@ class EmployerActionsTest extends TestCase
             'logo' => UploadedFile::fake()->image('logo.png'),
         ]);
 
-        $response->assertRedirect(route('employer.dashboard'));
+        $response->assertRedirect(route('employer.company.edit'));
 
         $company->refresh();
         $this->assertSame('Acme Labs', $company->name);

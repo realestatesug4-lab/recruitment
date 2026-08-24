@@ -7,17 +7,17 @@
                     <div class="h-11 w-11 rounded-xl overflow-hidden bg-white shadow-sm ring-1 ring-gray-200 transition-transform duration-300 group-hover:scale-105">
                         <img
                             src="{{ asset('images/cranelinks.png') }}"
-                            alt="QuickLinks Logo"
+                            alt="CraneLinks Logo"
                             class="h-full w-full object-cover"
                         >
                     </div>
 
                     <!-- Brand -->
                     <div class="flex flex-col leading-none">
-                        <span class="font-syne text-xl font-extrabold tracking-tight text-forest">
+                        <span class="font-syne text-xl font-extrabold tracking-tight text-white">
                             CraneLinks
                         </span>
-                        <span class="text-xs uppercase tracking-[0.25em] text-gray-500">
+                        <span class="text-xs uppercase tracking-[0.25em] text-white/50">
                             One Click Away
                         </span>
                     </div>
@@ -63,7 +63,7 @@
         </div>
 
         <div class="flex flex-col items-center justify-between gap-4 text-xs md:flex-row">
-            <span>&copy; 2024 quicklinks.com. A project of Imagine Dreams Africa.</span>
+            <span>&copy; {{ now()->year }} CraneLinks. A project of Imagine Dreams Africa.</span>
             <div class="flex gap-5">
                 <a href="#" class="text-white/30 transition-colors hover:text-white/60">Privacy</a>
                 <a href="#" class="text-white/30 transition-colors hover:text-white/60">Terms</a>

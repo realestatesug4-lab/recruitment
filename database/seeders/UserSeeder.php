@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
         // Admin account
         User::create([
             'name' => 'Admin User',
-            'email' => 'admin@jobsug.com',
+            'email' => 'admin@cranelinks.com',
             'password' => Hash::make('admin123'),
             'email_verified_at' => now()
         ]);

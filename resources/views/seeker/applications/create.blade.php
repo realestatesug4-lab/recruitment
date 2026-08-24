@@ -1,9 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
-@section('title', 'Apply - JobsUG')
+@section('title', 'Apply — CraneLinks')
+@section('page_title', 'Apply')
 
 @section('content')
-<div class="page-wrap py-10">
+<div class="px-4 sm:px-6 lg:px-8 py-8">
     <div class="mx-auto max-w-5xl">
         <div class="mb-8 grid gap-5 lg:grid-cols-[1fr_280px] lg:items-end">
             <div>
@@ -124,7 +125,7 @@
                         @endif
                     </div>
 
-                    <button type="submit" class="w-full rounded-full bg-mint px-6 py-3 text-sm font-semibold text-forest transition hover:bg-[#6dc99a]">
+                    <button type="submit" class="w-full rounded-lg bg-forest px-6 py-3 text-sm font-semibold text-white transition hover:bg-sage">
                         Submit application
                     </button>
 

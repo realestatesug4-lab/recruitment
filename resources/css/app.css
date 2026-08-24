@@ -1,4 +1,6 @@
 @import 'tailwindcss';
+@import './about.css';
+@import './resources.css';
 @config '../../tailwind.config.js';
 
 @source '../../resources/views/**/*.blade.php';

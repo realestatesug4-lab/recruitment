@@ -3,5 +3,7 @@
 use App\Http\Controllers\JobApiController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/jobs', [JobApiController::class, 'index'])->name('api.jobs.index');
-Route::get('/jobs/suggest', [JobApiController::class, 'suggest'])->name('api.jobs.suggest');
+Route::middleware('throttle:api')->group(function () {
+    Route::get('/jobs', [JobApiController::class, 'index'])->name('api.jobs.index');
+    Route::get('/jobs/suggest', [JobApiController::class, 'suggest'])->name('api.jobs.suggest');
+});

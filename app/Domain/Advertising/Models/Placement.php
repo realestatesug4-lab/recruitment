@@ -25,4 +25,17 @@ class Placement extends Model
         'device_targeting' => 'array',
         'audience' => 'array',
     ];
+
+    public function stats()
+    {
+        return $this->hasMany(AdStat::class);
+    }
+
+    public function getRecentStats($days = 30)
+    {
+        return $this->stats()
+            ->where('date', '>=', now()->subDays($days))
+            ->orderBy('date', 'desc')
+            ->get();
+    }
 }

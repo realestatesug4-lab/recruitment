@@ -1,6 +1,6 @@
 @extends('layouts.app', ['page' => 'jobs'])
 
-@section('title', 'Browse Jobs - JobsUG')
+@section('title', 'Browse Jobs — CraneLinks')
 
 @section('content')
 <div class="page-wrap py-6 sm:py-8 lg:py-10" x-data="jobFilters()" x-init="init()">

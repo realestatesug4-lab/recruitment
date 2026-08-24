@@ -1,6 +1,6 @@
 @extends('layouts.app', ['page' => 'companies'])
 
-@section('title', 'Companies - JobsUG')
+@section('title', 'Companies — CraneLinks')
 
 @section('content')
 <div class="page-wrap py-8 sm:py-12">
@@ -14,7 +14,7 @@
                 Discover companies hiring across Uganda.
             </h1>
             <p class="mt-4 max-w-2xl text-base leading-7 text-text-mid">
-                Browse verified employers, open roles, industries, and locations from the JobsUG database.
+                Browse verified employers, open roles, industries, and locations from the CraneLinks database.
             </p>
         </div>
 

@@ -4,6 +4,7 @@ namespace App\Filament\Admin\Resources\Advertising\Schemas;
 
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Select;
 use Filament\Schemas\Schema;
 
 class AdvertiserForm
@@ -25,10 +26,14 @@ class AdvertiserForm
             TextInput::make('contact_email')
                 ->email()
                 ->maxLength(255),
-            TextInput::make('status')
+            Select::make('status')
+                ->options([
+                    'active' => 'Active',
+                    'paused' => 'Paused',
+                    'archived' => 'Archived',
+                ])
                 ->required()
-                ->default('active')
-                ->maxLength(50),
+                ->default('active'),
             Textarea::make('notes')->rows(4),
             TextInput::make('external_advertiser_id')->numeric()->nullable(),
         ]);

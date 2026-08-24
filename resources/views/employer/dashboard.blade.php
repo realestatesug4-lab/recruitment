@@ -1,134 +1,123 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 
-@section('title', 'Employer Dashboard - JobsUG')
+@section('title', 'Employer Dashboard — CraneLinks')
+@section('page_title', 'Dashboard')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-forest/5 via-white to-mint/5 py-10">
-    <section class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-            <div class="inline-flex items-center gap-2 rounded-full bg-mint/10 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-sage">
-                Employer portal
+<div class="px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    {{-- Welcome banner --}}
+    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-8 text-white">
+        <div class="relative z-10">
+            <h1 class="text-2xl font-bold tracking-tight sm:text-3xl">{{ $viewModel->company->name }}</h1>
+            <p class="mt-2 text-sm text-gray-300">
+                {{ $viewModel->openJobs }} open role(s) &middot; {{ $viewModel->totalApplications }} total applications
+            </p>
+            <div class="mt-5 flex flex-wrap gap-3">
+                <a href="{{ route('employer.jobs.create') }}" class="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-gray-900 shadow-sm transition hover:bg-gray-100">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                    Post a job
+                </a>
+                <a href="{{ route('employer.ats') }}" class="inline-flex items-center gap-2 rounded-lg bg-white/15 px-4 py-2.5 text-sm font-semibold text-white backdrop-blur-sm transition hover:bg-white/25">
+                    <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" /></svg>
+                    ATS Pipeline
+                </a>
             </div>
-            <h1 class="mt-4 font-syne text-4xl font-bold text-deep">Hiring dashboard</h1>
-            <p class="mt-2 text-text-mid">{{ $viewModel->company->name }} &middot; {{ $viewModel->company->industry ?? 'Employer workspace' }}</p>
         </div>
-        <div class="flex flex-wrap gap-3">
-            <a href="{{ route('employer.jobs.create') }}" class="rounded-full bg-forest px-5 py-3 text-sm font-semibold text-white transition hover:bg-sage">Create job</a>
-            <a href="{{ route('employer.jobs.index') }}" class="rounded-full bg-white/70 px-5 py-3 text-sm font-semibold text-forest transition hover:bg-white">Manage jobs</a>
-            <a href="{{ route('employer.applications.index') }}" class="rounded-full bg-white/70 px-5 py-3 text-sm font-semibold text-forest transition hover:bg-white">Review applications</a>
-            <form method="POST" action="{{ route('logout') }}" class="inline-flex">
-                @csrf
-                <button type="submit" class="rounded-full border border-gray-200 bg-white/80 px-5 py-3 text-sm font-semibold text-text-mid transition hover:bg-white">Logout</button>
-            </form>
-        </div>
-    </section>
+        <div class="absolute -right-8 -top-8 h-48 w-48 rounded-full bg-white/5 blur-2xl"></div>
+    </div>
 
     @if($viewModel->company->verification_status !== 'verified')
-        <section class="mt-6 rounded-lg border border-amber-200 bg-amber-50 p-5">
-            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                    <div class="font-semibold text-amber-900">Company verification is {{ str($viewModel->company->verification_status)->replace('-', ' ') }}</div>
-                    <p class="mt-1 text-sm text-amber-800">You can prepare draft jobs now. Publishing should wait until the company profile has been reviewed.</p>
-                </div>
-                <span class="inline-flex w-fit rounded-full bg-white px-3 py-1 text-xs font-semibold uppercase tracking-wide text-amber-700">
-                    Trust review
-                </span>
-            </div>
-        </section>
-    @endif
-
-    <section class="mt-8 grid gap-4 md:grid-cols-3">
-        @foreach($viewModel->stats() as $stat)
-            <div class="glass rounded-lg p-6">
-                <div class="text-sm font-semibold uppercase tracking-wide text-text-light">{{ $stat['label'] }}</div>
-                <div class="mt-3 font-syne text-4xl font-bold text-deep">{{ number_format($stat['value']) }}</div>
-                <div class="mt-2 text-sm text-sage">{{ $stat['hint'] }}</div>
-            </div>
-        @endforeach
-    </section>
-
-    <section class="mt-8 grid gap-6 lg:grid-cols-[1.7fr_1fr]">
-        <div class="glass rounded-lg p-6">
-            <div class="mb-5 flex items-center justify-between">
-                <h2 class="font-syne text-2xl font-bold text-deep">Recent applications</h2>
-                <a href="{{ route('employer.applications.index') }}" class="text-sm font-semibold text-sage hover:text-forest">View all</a>
-            </div>
-
-            <div class="space-y-3">
-                @forelse($viewModel->recentApplicationCards() as $application)
-                    <div class="rounded-lg bg-white/60 p-4">
-                        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                            <div>
-                                <div class="font-semibold text-deep">{{ $application['candidate'] }}</div>
-                                <div class="mt-1 text-sm text-text-light">{{ $application['job'] }} &middot; {{ $application['applied_at'] }}</div>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                @if($application['score'])
-                                    <span class="rounded-full bg-mint/10 px-3 py-1 text-xs font-semibold text-sage">{{ $application['score'] }}% match</span>
-                                @endif
-                                <span class="rounded-full bg-white px-3 py-1 text-xs font-semibold text-text-mid">{{ $application['status'] }}</span>
-                            </div>
-                        </div>
-                    </div>
-                @empty
-                    <div class="rounded-lg bg-white/60 p-8 text-center text-text-mid">No applications yet.</div>
-                @endforelse
+        <div class="rounded-xl border border-amber-200 bg-amber-50 p-4 flex items-start gap-3">
+            <svg class="mt-0.5 h-5 w-5 shrink-0 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>
+            <div>
+                <p class="text-sm font-semibold text-amber-800">Company verification: {{ str($viewModel->company->verification_status)->replace('-', ' ')->title() }}</p>
+                <p class="mt-0.5 text-xs text-amber-600">Publishing is available once your company profile has been reviewed.</p>
             </div>
         </div>
+    @endif
 
-        <aside class="glass rounded-lg p-6">
-            <h2 class="font-syne text-xl font-bold text-deep">Company profile</h2>
-            <div class="mt-5 flex items-center gap-4">
-                <div class="flex h-14 w-14 items-center justify-center rounded-lg font-syne text-xl font-bold text-white" style="background: {{ $viewModel->company->color ?? '#1B4332' }}">
-                    {{ strtoupper(substr($viewModel->company->name, 0, 1)) }}
+    {{-- Stats --}}
+    <div class="grid gap-4 sm:grid-cols-3">
+        @foreach($viewModel->stats() as $stat)
+            <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+                <p class="text-xs font-semibold uppercase tracking-wider text-gray-500">{{ $stat['label'] }}</p>
+                <p class="mt-1.5 text-3xl font-bold text-gray-900">{{ number_format($stat['value']) }}</p>
+                <p class="mt-2 text-xs text-gray-500">{{ $stat['hint'] }}</p>
+            </div>
+        @endforeach
+    </div>
+
+    <div class="grid gap-8 lg:grid-cols-3">
+        {{-- Recent applications --}}
+        <div class="rounded-xl border border-gray-200 bg-white shadow-sm lg:col-span-2">
+            <div class="flex items-center justify-between border-b border-gray-100 px-6 py-4">
+                <h2 class="text-lg font-semibold text-gray-900">Recent applications</h2>
+                <a href="{{ route('employer.applications.index') }}" class="text-sm font-medium text-forest hover:text-sage">View all &rarr;</a>
+            </div>
+
+            @if($viewModel->recentApplicationCards()->isEmpty())
+                <div class="px-6 py-12 text-center">
+                    <p class="text-sm text-gray-500">No applications yet. Post a job to start receiving candidates.</p>
                 </div>
-                <div>
-                    <div class="font-semibold text-deep">{{ $viewModel->company->name }}</div>
-                    <div class="text-sm text-text-light">{{ $viewModel->company->location ?? 'Uganda' }}</div>
+            @else
+                <div class="divide-y divide-gray-100">
+                    @foreach($viewModel->recentApplicationCards() as $app)
+                        <div class="flex items-center justify-between px-6 py-4">
+                            <div class="min-w-0 flex-1">
+                                <p class="truncate text-sm font-semibold text-gray-900">{{ $app['candidate'] }}</p>
+                                <p class="mt-0.5 text-xs text-gray-500">{{ $app['job'] }} &middot; {{ $app['applied_at'] }}</p>
+                            </div>
+                            <div class="ml-4 flex items-center gap-2">
+                                @if($app['score'])
+                                    <span class="rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700 ring-1 ring-inset ring-emerald-600/20">{{ $app['score'] }}%</span>
+                                @endif
+                                <span class="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs font-medium text-gray-600">{{ $app['status'] }}</span>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            @endif
+        </div>
+
+        {{-- Quick actions sidebar --}}
+        <div class="space-y-4">
+            <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+                <h3 class="text-sm font-semibold text-gray-900">Quick actions</h3>
+                <div class="mt-3 space-y-2">
+                    <a href="{{ route('employer.jobs.create') }}" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition">
+                        <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                        Post a job
+                    </a>
+                    <a href="{{ route('employer.ats') }}" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition">
+                        <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7" /></svg>
+                        ATS Pipeline
+                    </a>
+                    <a href="{{ route('employer.jobs.index') }}" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition">
+                        <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                        Manage jobs
+                    </a>
+                    <a href="{{ route('employer.company.edit') }}" class="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition">
+                        <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                        Company profile
+                    </a>
                 </div>
             </div>
-            <p class="mt-5 text-sm leading-6 text-text-mid">{{ $viewModel->company->description ?? 'Keep your company profile fresh so candidates understand your team.' }}</p>
-            <div class="mt-5 flex flex-wrap gap-3">
-                <a href="{{ route('companies.show', $viewModel->company->slug) }}" class="inline-flex text-sm font-semibold text-sage hover:text-forest">View public profile &rarr;</a>
+
+            <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+                <h3 class="text-sm font-semibold text-gray-900">Company</h3>
+                <div class="mt-3 flex items-center gap-3">
+                    <div class="flex h-11 w-11 items-center justify-center rounded-lg font-bold text-white" style="background: {{ $viewModel->company->color ?? '#1B4332' }}">
+                        {{ strtoupper(substr($viewModel->company->name, 0, 1)) }}
+                    </div>
+                    <div class="min-w-0">
+                        <p class="truncate text-sm font-semibold text-gray-900">{{ $viewModel->company->name }}</p>
+                        <p class="text-xs text-gray-500">{{ $viewModel->company->location ?? 'Uganda' }}</p>
+                    </div>
+                </div>
+                <a href="{{ route('companies.show', $viewModel->company->slug) }}" class="mt-4 block text-center rounded-lg bg-gray-50 py-2 text-xs font-semibold text-gray-700 hover:bg-gray-100 transition">View public profile</a>
             </div>
-            <form action="{{ route('employer.company.update') }}" method="POST" enctype="multipart/form-data" class="mt-6 space-y-4 rounded-lg border border-gray-200 bg-white/70 p-4">
-                @csrf
-                @method('PUT')
-                <div>
-                    <label class="block text-sm font-medium text-text-mid">Company name</label>
-                    <input type="text" name="name" value="{{ old('name', $viewModel->company->name) }}" class="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm" required>
-                </div>
-                <div class="grid gap-4 sm:grid-cols-2">
-                    <div>
-                        <label class="block text-sm font-medium text-text-mid">Industry</label>
-                        <input type="text" name="industry" value="{{ old('industry', $viewModel->company->industry) }}" class="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-text-mid">Location</label>
-                        <input type="text" name="location" value="{{ old('location', $viewModel->company->location) }}" class="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-text-mid">Description</label>
-                    <textarea name="description" rows="3" class="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm">{{ old('description', $viewModel->company->description) }}</textarea>
-                </div>
-                <div class="grid gap-4 sm:grid-cols-2">
-                    <div>
-                        <label class="block text-sm font-medium text-text-mid">Website</label>
-                        <input type="url" name="website" value="{{ old('website', $viewModel->company->website) }}" class="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-text-mid">Team size</label>
-                        <input type="text" name="size" value="{{ old('size', $viewModel->company->size) }}" class="mt-2 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm">
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-text-mid">Company logo</label>
-                    <input type="file" name="logo" accept="image/*" class="mt-2 block w-full text-sm text-text-mid">
-                </div>
-                <button type="submit" class="w-full rounded-full bg-forest px-4 py-2 text-sm font-semibold text-white transition hover:bg-sage">Update company profile</button>
-            </form>
-        </aside>
-    </section>
+        </div>
+    </div>
 </div>
 @endsection

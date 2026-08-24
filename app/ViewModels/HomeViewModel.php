@@ -34,32 +34,36 @@ class HomeViewModel
 
     public function latestJobs(): array
     {
-        return Job::published()
-            ->with('company')
-            ->latest('published_at')
-            ->limit(5)
-            ->get()
-            ->map(fn (Job $job): array => [
-                'title' => $job->title,
-                'company' => $job->company?->name ?? 'Unknown company',
-                'location' => $job->location ?? 'Uganda',
-                'type' => match ($job->job_type->value) {
-                    'full-time' => 'Full-time',
-                    'contract' => 'Contract',
-                    'remote' => 'Remote',
-                    default => Str::of($job->job_type->value)->replace('-', ' ')->title()->toString(),
-                },
-                'badge_class' => match ($job->job_type->value) {
-                    'full-time' => 'badge-green',
-                    'contract' => 'badge-amber',
-                    'remote' => 'badge-blue',
-                    default => 'badge-green',
-                },
-                'logo_bg' => 'rgba(18,58,237,0.10)',
-                'logo_color' => $job->company?->color ?? '#123aed',
-                'initial' => Str::of($job->company?->name ?? $job->title)->substr(0, 1)->upper()->toString(),
-            ])
-            ->all();
+        try {
+            return Job::published()
+                ->with('company')
+                ->latest('published_at')
+                ->limit(5)
+                ->get()
+                ->map(fn (Job $job): array => [
+                    'title' => $job->title,
+                    'company' => $job->company?->name ?? 'Unknown company',
+                    'location' => $job->location ?? 'Uganda',
+                    'type' => match ($job->job_type->value) {
+                        'full-time' => 'Full-time',
+                        'contract' => 'Contract',
+                        'remote' => 'Remote',
+                        default => Str::of($job->job_type->value)->replace('-', ' ')->title()->toString(),
+                    },
+                    'badge_class' => match ($job->job_type->value) {
+                        'full-time' => 'badge-green',
+                        'contract' => 'badge-amber',
+                        'remote' => 'badge-blue',
+                        default => 'badge-green',
+                    },
+                    'logo_bg' => 'rgba(18,58,237,0.10)',
+                    'logo_color' => $job->company?->color ?? '#123aed',
+                    'initial' => Str::of($job->company?->name ?? $job->title)->substr(0, 1)->upper()->toString(),
+                ])
+                ->all();
+        } catch (\Throwable) {
+            return [];
+        }
     }
 
     public function featuredCompanies(): array

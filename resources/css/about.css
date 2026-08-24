@@ -1,0 +1,99 @@
+/*
+ * About page styles
+ * Reuses the CraneLinks theme tokens (cream, deep, forest, sage, mint, amber)
+ * and shared surfaces (glass, glass-forest, bento-card, page-kicker).
+ */
+
+/* ===== Header ===== */
+.about-headline {
+    @apply font-syne text-4xl font-extrabold leading-tight tracking-tight text-deep sm:text-5xl;
+}
+
+.about-lead {
+    @apply mt-2 max-w-2xl text-base leading-7 text-text-mid sm:text-lg;
+}
+
+/* ===== Chips / tags ===== */
+.about-chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-white/60 bg-white/70 px-3 py-1 text-sm text-deep;
+}
+
+.about-chip--sm {
+    @apply px-3 py-1 text-xs font-medium;
+}
+
+.about-card-label {
+    @apply inline-flex self-start items-center rounded-full bg-mint/12 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-sage;
+}
+
+.about-card-label--amber {
+    @apply bg-amber/12 text-amber;
+}
+
+/* ===== Stats card ===== */
+.about-stat-num {
+    @apply font-syne text-4xl font-extrabold leading-none;
+}
+
+.about-stat-label {
+    @apply mt-1 text-xs font-medium uppercase tracking-[0.18em] text-text-mid;
+}
+
+/* ===== Values accordion ===== */
+.about-value-toggle {
+    @apply flex w-full items-center justify-between gap-4 py-3 text-left text-base font-semibold text-deep sm:text-lg;
+}
+
+.about-value-icon {
+    @apply flex h-8 w-8 flex-none items-center justify-center rounded-full bg-mint/12 font-syne text-lg font-bold text-sage transition-transform duration-200;
+}
+
+.about-value-toggle[aria-expanded='true'] .about-value-icon {
+    transform: rotate(45deg);
+    @apply bg-amber/12 text-amber;
+}
+
+.about-value-body {
+    @apply pb-4 pr-4 text-sm leading-relaxed text-text-mid;
+}
+
+.about-value-item {
+    @apply border-b border-white/50 pb-1 last:border-b-0;
+}
+
+/* ===== Quote panel ===== */
+.about-quote-grain {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='none'/%3E%3Cpath d='M20 10a10 10 0 1 0 0 20 10 10 0 0 0 0-20z' fill='rgba(255,255,255,0.04)'/%3E%3C/svg%3E");
+}
+
+.about-parallax {
+    will-change: transform;
+}
+
+/* ===== Contact + newsletter ===== */
+.about-contact-row {
+    @apply flex items-center gap-3 text-text-mid;
+}
+
+.about-input {
+    @apply w-full flex-1 rounded-full border border-white/60 bg-white/50 px-4 py-3 text-sm text-deep backdrop-blur transition focus:border-amber/60 focus:outline-none focus:ring-2 focus:ring-amber/50;
+}
+
+.about-submit {
+    @apply inline-flex min-h-11 min-w-11 items-center justify-center gap-1 rounded-full bg-deep px-6 py-3 text-sm font-semibold text-white transition hover:bg-forest;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 640px) {
+    .about-headline {
+        @apply text-3xl;
+    }
+}
+
+/* ===== Motion ===== */
+@media (prefers-reduced-motion: reduce) {
+    .about-parallax {
+        transform: none !important;
+        will-change: auto;
+    }
+}
