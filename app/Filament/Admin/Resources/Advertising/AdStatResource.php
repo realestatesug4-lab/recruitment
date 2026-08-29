@@ -44,16 +44,16 @@ class AdStatResource extends Resource
                     ->summarize(\Filament\Tables\Enums\SummaryType::Sum),
                 TextColumn::make('ctr')
                     ->label('CTR (%)')
-                    ->formatStateUsing(fn (string $state): string => round((float)$state, 2) . '%')
+                    ->formatStateUsing(fn ($state): string => is_numeric($state) ? round((float) $state, 2) . '%' : '0%')
                     ->sortable(),
                 TextColumn::make('revenue')
                     ->label('Revenue')
-                    ->money('usd')
+                    ->money('USD')
                     ->sortable()
                     ->summarize(\Filament\Tables\Enums\SummaryType::Sum),
                 TextColumn::make('ecpm')
                     ->label('eCPM')
-                    ->formatStateUsing(fn (string $state): string => '$' . round((float)$state, 2))
+                    ->formatStateUsing(fn ($state): string => is_numeric($state) ? '$' . round((float) $state, 2) : '$0.00')
                     ->sortable(),
             ])
             ->filters([

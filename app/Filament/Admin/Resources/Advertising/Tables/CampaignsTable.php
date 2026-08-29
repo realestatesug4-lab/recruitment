@@ -16,7 +16,7 @@ class CampaignsTable
                 TextColumn::make('name')->sortable()->searchable(),
                 TextColumn::make('advertiser.name')->label('Advertiser')->sortable()->searchable(),
                 TextColumn::make('type')->sortable(),
-                TextColumn::make('budget_total')->money('usd')->sortable(),
+                TextColumn::make('budget_total')->money('USD')->sortable(),
                 BadgeColumn::make('status')->enum([
                     'active' => 'Active',
                     'paused' => 'Paused',

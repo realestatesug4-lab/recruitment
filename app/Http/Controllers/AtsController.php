@@ -8,6 +8,7 @@ use App\Events\ApplicationStatusUpdated;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class AtsController extends Controller
@@ -17,7 +18,17 @@ class AtsController extends Controller
      */
     public function index(): View
     {
-        $companyId = Auth::user()->employerProfile->company_id;
+        $user = Auth::user();
+
+        if (! $user) {
+            abort(403, 'Unauthorized.');
+        }
+
+        $companyId = $user->employerProfile?->company_id;
+
+        if (! $companyId) {
+            return redirect()->route('employer.onboarding.create')->with('error', 'Set up your company profile first.');
+        }
 
         $columns = collect(ApplicationStatus::cases())
             ->filter(fn (ApplicationStatus $s) => $s !== ApplicationStatus::DRAFT)
@@ -47,17 +58,24 @@ class AtsController extends Controller
             'note'   => 'nullable|string|max:1000',
         ]);
 
-        $oldStatus = $application->status;
         $newStatus = ApplicationStatus::from($request->input('status'));
 
-        if ($oldStatus === $newStatus) {
-            return back()->with('success', 'Status unchanged.');
-        }
+        return DB::transaction(function () use ($application, $newStatus, $request) {
+            $lockedApplication = Application::query()
+                ->whereKey($application->getKey())
+                ->lockForUpdate()
+                ->firstOrFail();
 
-        // Update status and fire event — listener handles history + notification
-        $application->update(['status' => $newStatus]);
-        event(new ApplicationStatusUpdated($application, $oldStatus, $newStatus, $request->input('note')));
+            $oldStatus = $lockedApplication->status;
 
-        return back()->with('success', "Candidate moved to {$newStatus->value}.");
+            if ($oldStatus === $newStatus) {
+                return back()->with('success', 'Status unchanged.');
+            }
+
+            $lockedApplication->update(['status' => $newStatus]);
+            event(new ApplicationStatusUpdated($lockedApplication, $oldStatus, $newStatus, $request->input('note')));
+
+            return back()->with('success', "Candidate moved to {$newStatus->value}.");
+        });
     }
 }

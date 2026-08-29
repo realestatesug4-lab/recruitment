@@ -2,8 +2,10 @@
 
 namespace App\Filament\Admin\Resources\EmployerProfiles;
 
+use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -12,7 +14,9 @@ class EmployerProfileResource extends Resource
 {
     protected static ?string $model = \App\Domain\Users\Models\EmployerProfile::class;
 
-    protected static ?string $recordTitleAttribute = 'company_name';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBriefcase;
+
+    protected static ?string $recordTitleAttribute = 'job_title';
 
     public static function form(Schema $schema): Schema
     {

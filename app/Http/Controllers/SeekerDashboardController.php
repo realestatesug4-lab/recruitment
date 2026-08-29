@@ -14,6 +14,10 @@ class SeekerDashboardController extends Controller
     {
         $user = Auth::user();
 
+        if (! $user) {
+            abort(403, 'Unauthorized.');
+        }
+
         $applications = Application::with(['job.company', 'statusHistory'])
             ->where('seeker_id', $user->id)
             ->latest()

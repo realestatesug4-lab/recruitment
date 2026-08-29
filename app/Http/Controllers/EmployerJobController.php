@@ -18,9 +18,20 @@ class EmployerJobController extends Controller
 {
     public function index(): View
     {
-        $companyId = Auth::user()->employerProfile->company_id;
+        $user = Auth::user();
+
+        if (! $user) {
+            abort(403, 'Unauthorized.');
+        }
+
+        $companyId = $user->employerProfile?->company_id;
+
+        if (! $companyId) {
+            return redirect()->route('employer.onboarding.create')->with('error', 'Set up your company profile first.');
+        }
+
         $jobs = Job::where('company_id', $companyId)
-            ->with('categories', 'skills')
+            ->with(['categories', 'skills'])
             ->paginate(15);
 
         return view('employer.jobs.index', compact('jobs'));
@@ -28,10 +39,22 @@ class EmployerJobController extends Controller
 
     public function create(): View
     {
+        $user = Auth::user();
+
+        if (! $user) {
+            abort(403, 'Unauthorized.');
+        }
+
+        $company = $user->employerProfile?->company;
+
+        if (! $company) {
+            return redirect()->route('employer.onboarding.create')->with('error', 'Set up your company profile first.');
+        }
+
         return view('employer.jobs.create', [
             'categories' => JobCategory::orderBy('name')->get(),
             'skills' => Skill::orderBy('name')->get(),
-            'company' => Auth::user()->employerProfile->company,
+            'company' => $company,
         ]);
     }
 
@@ -39,9 +62,21 @@ class EmployerJobController extends Controller
         StoreJobRequest $request,
         PostJobAction $action
     ): RedirectResponse {
+        $user = Auth::user();
+
+        if (! $user) {
+            abort(403, 'Unauthorized.');
+        }
+
+        $companyId = $user->employerProfile?->company_id;
+
+        if (! $companyId) {
+            return redirect()->route('employer.onboarding.create')->with('error', 'Set up your company profile first.');
+        }
+
         $job = $action->execute(
             JobData::fromRequest($request),
-            Auth::user()->employerProfile->company_id
+            $companyId
         );
 
         return redirect()

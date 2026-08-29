@@ -11,7 +11,13 @@ class SeekerSavedJobController extends Controller
 {
     public function index(): View
     {
-        $savedJobs = Auth::user()->savedJobs()
+        $user = Auth::user();
+
+        if (! $user) {
+            abort(403, 'Unauthorized.');
+        }
+
+        $savedJobs = $user->savedJobs()
             ->with(['job.company', 'job.skills'])
             ->latest()
             ->paginate(12);
@@ -21,14 +27,20 @@ class SeekerSavedJobController extends Controller
 
     public function toggle(Job $job): RedirectResponse
     {
-        $saved = Auth::user()->savedJobs()->where('job_id', $job->id)->first();
+        $user = Auth::user();
+
+        if (! $user) {
+            abort(403, 'Unauthorized.');
+        }
+
+        $saved = $user->savedJobs()->where('job_id', $job->id)->first();
 
         if ($saved) {
             $saved->delete();
             return back()->with('success', 'Job removed from saved.');
         } else {
             SavedJob::create([
-                'user_id' => Auth::id(),
+                'user_id' => $user->id,
                 'job_id' => $job->id
             ]);
             return back()->with('success', 'Job saved!');

@@ -165,32 +165,46 @@ class AdminDashboardViewModel
     protected function recentActivity(): array
     {
         try {
-            $applications = Application::query()->latest()->take(4)->get()->map(fn (Application $application) => [
-                'type' => 'Application',
-                'title' => $application->job?->title ?? 'Application',
-                'meta' => $application->user?->name ?? 'Candidate',
-                'value' => $application->status?->value ?? $application->status,
-                'when' => $application->created_at?->diffForHumans() ?? 'recently',
-                'url' => $this->safeRoute('employer.applications.show', $application->uuid ?? $application->id),
-            ]);
+            $applications = Application::query()
+                ->with(['job.company', 'user'])
+                ->latest()
+                ->take(4)
+                ->get()
+                ->map(fn (Application $application) => [
+                    'type' => 'Application',
+                    'title' => $application->job?->title ?? 'Application',
+                    'meta' => $application->user?->name ?? 'Candidate',
+                    'value' => $application->status?->value ?? $application->status,
+                    'when' => $application->created_at?->diffForHumans() ?? 'recently',
+                    'url' => $this->safeRoute('employer.applications.show', $application->uuid ?? $application->id),
+                ]);
 
-            $jobs = Job::query()->latest()->take(3)->get()->map(fn (Job $job) => [
-                'type' => 'Job',
-                'title' => $job->title,
-                'meta' => $job->company?->name ?? 'Company',
-                'value' => $job->status?->value ?? $job->status,
-                'when' => $job->created_at?->diffForHumans() ?? 'recently',
-                'url' => $this->safeRoute('jobs.show', $job->slug),
-            ]);
+            $jobs = Job::query()
+                ->with('company')
+                ->latest()
+                ->take(3)
+                ->get()
+                ->map(fn (Job $job) => [
+                    'type' => 'Job',
+                    'title' => $job->title,
+                    'meta' => $job->company?->name ?? 'Company',
+                    'value' => $job->status?->value ?? $job->status,
+                    'when' => $job->created_at?->diffForHumans() ?? 'recently',
+                    'url' => $this->safeRoute('jobs.show', $job->slug),
+                ]);
 
-            $companies = Company::query()->latest()->take(3)->get()->map(fn (Company $company) => [
-                'type' => 'Company',
-                'title' => $company->name,
-                'meta' => $company->industry ?? 'Partner',
-                'value' => 'Verified',
-                'when' => $company->created_at?->diffForHumans() ?? 'recently',
-                'url' => $this->safeRoute('companies.show', $company->slug),
-            ]);
+            $companies = Company::query()
+                ->latest()
+                ->take(3)
+                ->get()
+                ->map(fn (Company $company) => [
+                    'type' => 'Company',
+                    'title' => $company->name,
+                    'meta' => $company->industry ?? 'Partner',
+                    'value' => 'Verified',
+                    'when' => $company->created_at?->diffForHumans() ?? 'recently',
+                    'url' => $this->safeRoute('companies.show', $company->slug),
+                ]);
 
             return $applications->concat($jobs)->concat($companies)->take(6)->values()->all();
         } catch (Throwable) {

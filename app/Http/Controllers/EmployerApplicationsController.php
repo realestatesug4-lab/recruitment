@@ -10,12 +10,22 @@ class EmployerApplicationsController extends Controller
 {
     public function index()
     {
-        $companyId = Auth::user()->employerProfile->company_id;
+        $user = Auth::user();
+
+        if (! $user) {
+            return redirect()->route('login');
+        }
+
+        $companyId = $user->employerProfile?->company_id;
+
+        if (! $companyId) {
+            return redirect()->route('employer.onboarding.create')->with('error', 'Set up your company profile first.');
+        }
 
         $applications = Application::whereHas('job', function ($q) use ($companyId) {
             $q->where('company_id', $companyId);
         })
-        ->with(['job', 'seekerProfile'])
+        ->with(['job.company', 'seekerProfile'])
         ->paginate(20);
 
         return view('employer.applications.index', [

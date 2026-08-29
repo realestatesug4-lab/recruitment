@@ -9,6 +9,8 @@ class Placement extends Model
 {
     use HasFactory;
 
+    protected $table = 'placements';
+
     protected $fillable = [
         'name',
         'slug',

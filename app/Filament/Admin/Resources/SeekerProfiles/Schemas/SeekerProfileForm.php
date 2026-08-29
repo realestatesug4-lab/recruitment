@@ -12,13 +12,12 @@ class SeekerProfileForm
     public static function configure(Schema $schema): Schema
     {
         return $schema->components([
-            TextInput::make('uuid')->label('UUID'),
-            Select::make('user_id')->relationship('user', 'name'),
-            TextInput::make('name'),
-            TextInput::make('headline'),
-            TextInput::make('location'),
-            Textarea::make('summary')->columnSpanFull(),
-            TextInput::make('resume_url'),
+            Select::make('user_id')->relationship('user', 'name')->required(),
+            TextInput::make('headline')->maxLength(255)->nullable(),
+            TextInput::make('location')->maxLength(255)->nullable(),
+            TextInput::make('experience_level')->maxLength(255)->nullable(),
+            Textarea::make('bio')->columnSpanFull()->nullable(),
+            TextInput::make('resume_url')->url()->nullable(),
         ]);
     }
 }

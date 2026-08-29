@@ -11,6 +11,10 @@ class DashboardController extends Controller
     {
         $user = $request->user();
 
+        if (! $user) {
+            return redirect()->route('login');
+        }
+
         if ($user->role === 'employer' || $user->employerProfile) {
             return redirect()->route('employer.dashboard');
         }

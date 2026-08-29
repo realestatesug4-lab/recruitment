@@ -12,29 +12,34 @@ class EmployerDashboardController extends Controller
 {
     public function index(): View|RedirectResponse
     {
-        $profile = Auth::user()->employerProfile;
+        $user = Auth::user();
 
-        if (!$profile) {
+        if (! $user) {
+            return redirect()->route('login');
+        }
+
+        $profile = $user->employerProfile()->with('company')->first();
+
+        if (! $profile) {
             return redirect()->route('employer.onboarding.create')->with('error', 'Set up your company profile first.');
         }
 
         $company = $profile->company;
         $companyId = $company->id;
 
-        $viewModel = new EmployerDashboardViewModel(
-            company: $company,
-            openJobs: Job::where('company_id', $companyId)->published()->count(),
-            draftJobs: Job::where('company_id', $companyId)->where('status', 'draft')->count(),
-            totalApplications: Application::whereHas('job', function ($q) use ($companyId) {
-                $q->where('company_id', $companyId);
-            })->count(),
-            recentApplications: Application::whereHas('job', function ($q) use ($companyId) {
-                $q->where('company_id', $companyId);
-            })
-            ->with('seekerProfile')
+        $recentApplications = Application::query()
+            ->whereHas('job', fn ($q) => $q->where('company_id', $companyId))
+            ->with(['seekerProfile', 'job'])
             ->latest()
             ->limit(5)
-            ->get(),
+            ->get();
+
+        $viewModel = new EmployerDashboardViewModel(
+            company: $company,
+            openJobs: Job::query()->where('company_id', $companyId)->published()->count(),
+            draftJobs: Job::query()->where('company_id', $companyId)->where('status', 'draft')->count(),
+            totalApplications: Application::query()->whereHas('job', fn ($q) => $q->where('company_id', $companyId))->count(),
+            recentApplications: $recentApplications,
         );
 
         return view('employer.dashboard', ['viewModel' => $viewModel]);

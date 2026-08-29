@@ -17,9 +17,6 @@ class JobForm
     {
         return $schema
             ->components([
-                TextInput::make('uuid')
-                    ->label('UUID')
-                    ->required(),
                 TextInput::make('title')
                     ->required(),
                 Select::make('company_id')

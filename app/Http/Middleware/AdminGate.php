@@ -15,13 +15,13 @@ class AdminGate
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check()) {
-            return redirect()->route('admin.login');
-        }
-
         $user = auth()->user();
 
-        if (!$user->isAdmin()) {
+        if (! $user) {
+            return redirect()->guest(route('admin.login'));
+        }
+
+        if (! method_exists($user, 'isAdmin') || ! $user->isAdmin()) {
             abort(403, 'Unauthorized. Admin access required.');
         }
 

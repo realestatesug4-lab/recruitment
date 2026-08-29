@@ -14,9 +14,6 @@ class UserForm
     {
         return $schema
             ->components([
-                TextInput::make('uuid')
-                    ->label('UUID')
-                    ->required(),
                 TextInput::make('name')
                     ->required(),
                 TextInput::make('email')

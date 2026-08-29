@@ -15,9 +15,6 @@ class ApplicationForm
     {
         return $schema
             ->components([
-                TextInput::make('uuid')
-                    ->label('UUID')
-                    ->required(),
                 Select::make('job_id')
                     ->relationship('job', 'title')
                     ->required(),

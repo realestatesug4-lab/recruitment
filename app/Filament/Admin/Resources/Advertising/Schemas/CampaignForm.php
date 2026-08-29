@@ -3,11 +3,11 @@
 namespace App\Filament\Admin\Resources\Advertising\Schemas;
 
 use App\Domain\Advertising\Models\Advertiser;
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\DateTimePickerField;
 use Filament\Schemas\Schema;
 
 class CampaignForm
@@ -36,8 +36,8 @@ class CampaignForm
                 TextInput::make('budget_spent')->numeric()->required()->default(0),
             ]),
             Grid::make(2)->components([
-                DateTimePickerField::make('start_at')->nullable(),
-                DateTimePickerField::make('end_at')->nullable(),
+                DateTimePicker::make('start_at')->nullable(),
+                DateTimePicker::make('end_at')->nullable(),
             ]),
             Select::make('status')
                 ->options([

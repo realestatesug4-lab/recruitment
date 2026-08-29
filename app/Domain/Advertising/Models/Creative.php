@@ -9,6 +9,8 @@ class Creative extends Model
 {
     use HasFactory;
 
+    protected $table = 'creatives';
+
     protected $fillable = [
         'campaign_id',
         'name',

@@ -12,7 +12,9 @@ class AdminDashboardController extends Controller
      */
     public function index(): RedirectResponse
     {
-        if (!auth()->user()->isAdmin()) {
+        $user = auth()->user();
+
+        if (! $user || ! method_exists($user, 'isAdmin') || ! $user->isAdmin()) {
             abort(403, 'Unauthorized. Admin access required.');
         }
 
