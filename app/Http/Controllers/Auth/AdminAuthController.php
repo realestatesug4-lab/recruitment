@@ -4,24 +4,16 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Services\Admin\AdminOtpService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\{ Auth, Log };
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\{ Auth, Hash, Log };
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 class AdminAuthController extends Controller
 {
-    private AdminOtpService $otpService;
-
-    public function __construct(AdminOtpService $otpService)
-    {
-        $this->otpService = $otpService;
-    }
 
     /**
      * Show admin login form
@@ -32,29 +24,32 @@ class AdminAuthController extends Controller
     }
 
     /**
-     * Send OTP to admin email
+     * Send OTP to admin email after validating the password
      */
     public function requestOtp(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'email' => ['required', 'email', 'exists:users,email'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string'],
         ]);
 
-        // Verify the user is admin
-        $user = User::query()->where('email', $validated['email'])->firstOrFail();
-        if (!$user->isAdmin()) {
+        $user = User::query()->where('email', $validated['email'])->first();
+
+        if (! $user || ! $user->isAdmin() || ! Hash::check($validated['password'], $user->password)) {
             throw ValidationException::withMessages([
-                'email' => 'This email is not associated with an admin account.',
+                'email' => 'Invalid admin credentials.',
             ]);
         }
 
         try {
-            $this->otpService->generateAndSendOtp($validated['email'], 'login');
+            $user->sendOneTimePassword();
+
+            $request->session()->put('admin_otp_email', $user->email);
 
             return redirect()
                 ->route('admin.login.verify')
-                ->with('email', $validated['email'])
-                ->with('success', 'OTP sent to your email. It expires in 10 minutes.');
+                ->with('email', $user->email)
+                ->with('success', 'A verification code has been sent to your email.');
         } catch (\Exception $e) {
             return back()->withErrors(['email' => 'Failed to send OTP. Please try again.']);
         }
@@ -65,9 +60,9 @@ class AdminAuthController extends Controller
      */
     public function verifyShow(Request $request): View|RedirectResponse
     {
-        $email = $request->query('email') ?? session('email');
+        $email = $request->query('email') ?? session('email') ?? session('admin_otp_email');
 
-        if (!$email) {
+        if (! $email) {
             return redirect()->route('admin.login');
         }
 
@@ -87,30 +82,24 @@ class AdminAuthController extends Controller
             'code' => ['required', 'string', 'size:6'],
         ]);
 
-        $otp = $this->otpService->verifyOtp($validated['email'], $validated['code'], 'login');
+        $user = User::query()->where('email', $validated['email'])->first();
 
-        if (!$otp) {
-            throw ValidationException::withMessages([
-                'code' => 'Invalid or expired OTP. Please try again.',
-            ]);
-        }
-
-        $user = User::query()->where('email', $validated['email'])->firstOrFail();
-
-        if (!$user->isAdmin()) {
+        if (! $user || ! $user->isAdmin()) {
             throw ValidationException::withMessages([
                 'email' => 'Unauthorized access.',
             ]);
         }
 
-        // Mark OTP as used
-        $otp->markAsUsed();
+        $result = $user->attemptLoginUsingOneTimePassword($validated['code'], remember: true);
 
-        // Regenerate session to prevent fixation attacks
+        if (! $result->isOk()) {
+            throw ValidationException::withMessages([
+                'code' => $result->validationMessage(),
+            ]);
+        }
+
+        $request->session()->forget('admin_otp_email');
         $request->session()->regenerate();
-
-        // Log the user in
-        Auth::login($user, remember: true);
 
         return redirect()->intended(route('filament.admin.pages.dashboard'));
     }
@@ -124,11 +113,20 @@ class AdminAuthController extends Controller
             'email' => ['required', 'email'],
         ]);
 
+        $user = User::query()->where('email', $validated['email'])->first();
+
+        if (! $user || ! $user->isAdmin()) {
+            throw ValidationException::withMessages([
+                'email' => 'Invalid admin credentials.',
+            ]);
+        }
+
         try {
-            $this->otpService->resendOtp($validated['email'], 'login');
-            return back()->with('success', 'OTP resent to your email.');
+            $user->sendOneTimePassword();
+
+            return back()->with('success', 'A new verification code has been sent to your email.');
         } catch (\Exception $e) {
-            return back()->withErrors(['email' => $e->getMessage()]);
+            return back()->withErrors(['email' => 'Failed to resend OTP. Please try again.']);
         }
     }
 
@@ -150,16 +148,19 @@ class AdminAuthController extends Controller
             'admin_code' => ['required', 'string'],
         ]);
 
-        // Verify admin code (fail closed: registration is disabled when no code is configured)
         $adminCode = config('app.admin_registration_code');
-        if (blank($adminCode) || !hash_equals($adminCode, $validated['admin_code'])) {
+        if (blank($adminCode) || ! hash_equals($adminCode, $validated['admin_code'])) {
             throw ValidationException::withMessages([
                 'admin_code' => 'The admin registration code is invalid.',
             ]);
         }
 
         try {
-            $this->otpService->generateAndSendOtp($validated['email'], 'registration');
+            $user = new User([
+                'email' => $validated['email'],
+            ]);
+
+            $user->sendOneTimePassword();
 
             return redirect()
                 ->route('admin.register.verify')
@@ -167,7 +168,7 @@ class AdminAuthController extends Controller
                     'email' => $validated['email'],
                     'admin_code' => $validated['admin_code'],
                 ])
-                ->with('success', 'OTP sent to your email. It expires in 10 minutes.');
+                ->with('success', 'A verification code has been sent to your email.');
         } catch (\Exception $e) {
             return back()->withErrors(['email' => 'Failed to send OTP. Please try again.']);
         }
@@ -205,31 +206,37 @@ class AdminAuthController extends Controller
             'admin_code' => ['required', 'string'],
         ]);
 
-        // Verify admin code again (fail closed: registration is disabled when no code is configured)
         $adminCode = config('app.admin_registration_code');
-        if (blank($adminCode) || !hash_equals($adminCode, $validated['admin_code'])) {
+        if (blank($adminCode) || ! hash_equals($adminCode, $validated['admin_code'])) {
             throw ValidationException::withMessages([
                 'admin_code' => 'The admin registration code is invalid.',
             ]);
         }
 
-        // Verify OTP
-        $otp = $this->otpService->verifyOtp($validated['email'], $validated['code'], 'registration');
-        if (!$otp) {
-            throw ValidationException::withMessages([
-                'code' => 'Invalid or expired OTP. Please try again.',
+        $user = User::query()->where('email', $validated['email'])->first();
+        if (! $user) {
+            $user = new User([
+                'email' => $validated['email'],
             ]);
         }
 
-        // Create user
-        $user = User::create([
+        $result = $user->consumeOneTimePassword($validated['code']);
+
+        if (! $result->isOk()) {
+            throw ValidationException::withMessages([
+                'code' => $result->validationMessage(),
+            ]);
+        }
+
+        $user->fill([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'role' => 'admin',
-            'password' => Hash::make($validated['password']),
+            'password' => $validated['password'],
         ]);
 
-        // Assign admin role if using spatie
+        $user->save();
+
         if (method_exists($user, 'assignRole')) {
             try {
                 $user->assignRole('admin');
@@ -238,15 +245,10 @@ class AdminAuthController extends Controller
             }
         }
 
-        // Mark OTP as used
-        $otp->markAsUsed();
-
         event(new Registered($user));
 
-        // Regenerate session to prevent fixation attacks
         $request->session()->regenerate();
 
-        // Log the user in
         Auth::login($user);
 
         return redirect()->intended(route('filament.admin.pages.dashboard'))

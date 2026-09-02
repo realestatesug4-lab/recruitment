@@ -3,8 +3,10 @@
 namespace App\Domain\Users\Models;
 
 use App\Domain\Jobs\Models\Skill;
+use App\Domain\Users\Models\User;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Log;
 
@@ -45,6 +47,11 @@ class SeekerProfile extends Model
                 'data' => $profile->fresh()->toArray(),
             ]);
         });
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function skills(): BelongsToMany

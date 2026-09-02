@@ -26,17 +26,17 @@
     @if ($type === 'registration')
         <form method="POST" action="{{ route('admin.verify-register-otp') }}" id="otpForm">
             @csrf
-            
+
             <input type="hidden" name="email" value="{{ $email }}">
             <input type="hidden" name="admin_code" value="{{ $admin_code ?? '' }}">
 
             <!-- OTP Code -->
             <div class="mb-6">
                 <x-input-label for="code" :value="__('One-Time Password')" />
-                <input 
-                    id="code" 
-                    type="text" 
-                    name="code" 
+                <input
+                    id="code"
+                    type="text"
+                    name="code"
                     inputmode="numeric"
                     pattern="[0-9]{6}"
                     maxlength="6"
@@ -51,12 +51,12 @@
             @if ($type === 'registration')
                 <div class="mb-4">
                     <x-input-label for="name" :value="__('Full Name')" />
-                    <x-text-input 
-                        id="name" 
-                        class="block mt-2 w-full" 
-                        type="text" 
-                        name="name" 
-                        :value="old('name')" 
+                    <x-text-input
+                        id="name"
+                        class="block mt-2 w-full"
+                        type="text"
+                        name="name"
+                        :value="old('name')"
                         required
                         autocomplete="name"
                         placeholder="John Doe" />
@@ -66,11 +66,11 @@
                 <!-- Password -->
                 <div class="mb-4">
                     <x-input-label for="password" :value="__('Password')" />
-                    <x-text-input 
-                        id="password" 
-                        class="block mt-2 w-full" 
-                        type="password" 
-                        name="password" 
+                    <x-text-input
+                        id="password"
+                        class="block mt-2 w-full"
+                        type="password"
+                        name="password"
                         required
                         autocomplete="new-password"
                         placeholder="••••••••" />
@@ -80,11 +80,11 @@
                 <!-- Confirm Password -->
                 <div class="mb-6">
                     <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-                    <x-text-input 
-                        id="password_confirmation" 
-                        class="block mt-2 w-full" 
-                        type="password" 
-                        name="password_confirmation" 
+                    <x-text-input
+                        id="password_confirmation"
+                        class="block mt-2 w-full"
+                        type="password"
+                        name="password_confirmation"
                         required
                         autocomplete="new-password"
                         placeholder="••••••••" />
@@ -95,13 +95,9 @@
             <div class="mt-8 flex items-center justify-between gap-4">
                 <div class="text-sm">
                     <p class="text-text-mid">{{ __('Didn\'t receive the code?') }}</p>
-                    <form method="POST" action="{{ route('admin.resend-otp') }}" class="inline">
-                        @csrf
-                        <input type="hidden" name="email" value="{{ $email }}">
-                        <button type="submit" class="mt-1 font-semibold text-sage hover:text-forest">
-                            {{ __('Resend OTP') }}
-                        </button>
-                    </form>
+                    <button type="button" onclick="document.getElementById('resendOtpForm').submit()" class="mt-1 font-semibold text-sage hover:text-forest">
+                        {{ __('Resend OTP') }}
+                    </button>
                 </div>
 
                 <x-primary-button type="submit">
@@ -116,16 +112,16 @@
     @else
         <form method="POST" action="{{ route('admin.verify-otp') }}" id="otpForm">
             @csrf
-            
+
             <input type="hidden" name="email" value="{{ $email }}">
 
             <!-- OTP Code -->
             <div class="mb-6">
                 <x-input-label for="code" :value="__('One-Time Password')" />
-                <input 
-                    id="code" 
-                    type="text" 
-                    name="code" 
+                <input
+                    id="code"
+                    type="text"
+                    name="code"
                     inputmode="numeric"
                     pattern="[0-9]{6}"
                     maxlength="6"
@@ -139,13 +135,9 @@
             <div class="mt-8 flex items-center justify-between gap-4">
                 <div class="text-sm">
                     <p class="text-text-mid">{{ __('Didn\'t receive the code?') }}</p>
-                    <form method="POST" action="{{ route('admin.resend-otp') }}" class="inline">
-                        @csrf
-                        <input type="hidden" name="email" value="{{ $email }}">
-                        <button type="submit" class="mt-1 font-semibold text-sage hover:text-forest">
-                            {{ __('Resend OTP') }}
-                        </button>
-                    </form>
+                    <button type="button" onclick="document.getElementById('resendOtpForm').submit()" class="mt-1 font-semibold text-sage hover:text-forest">
+                        {{ __('Resend OTP') }}
+                    </button>
                 </div>
 
                 <x-primary-button type="submit">
@@ -154,6 +146,11 @@
             </div>
         </form>
     @endif
+
+    <form method="POST" action="{{ route('admin.resend-otp') }}" id="resendOtpForm" class="hidden">
+        @csrf
+        <input type="hidden" name="email" value="{{ $email }}">
+    </form>
 
     <div class="mt-8 rounded-lg border border-amber-200 bg-amber-50 p-4">
         <div class="flex gap-3">
@@ -171,7 +168,7 @@
         // Auto-format OTP input
         document.getElementById('code').addEventListener('input', function(e) {
             this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6);
-            
+
             // Auto-submit when 6 digits entered
             if (this.value.length === 6) {
                 // Uncomment to auto-submit:

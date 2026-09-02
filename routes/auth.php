@@ -12,86 +12,123 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
-        ->name('register');
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
+/*
+|--------------------------------------------------------------------------
+| Admin Authentication
+|--------------------------------------------------------------------------
+|
+| Admin authentication is served from:
+| https://admin.cranelinks.com
+|
+*/
 
-    // OTP-based admin authentication
-    Route::prefix('admin')->name('admin.')->middleware('throttle:10,1')->group(function () {
-        // Admin Login
-        Route::get('login', [AdminAuthController::class, 'loginShow'])
-            ->name('login');
+Route::domain(config('admin.panel_domain'))
+    ->middleware('guest')
+    ->name('admin.')
+    ->group(function () {
 
-        Route::post('login', [AdminAuthController::class, 'requestOtp'])
-            ->middleware('throttle:3,1')
-            ->name('request-otp');
+        Route::middleware('throttle:10,1')->group(function () {
 
-        Route::get('login/verify', [AdminAuthController::class, 'verifyShow'])
-            ->name('login.verify');
+            // Admin Login
 
-        Route::post('login/verify', [AdminAuthController::class, 'verifyOtp'])
-            ->middleware('throttle:5,1')
-            ->name('verify-otp');
+            Route::get('/login', [AdminAuthController::class, 'loginShow'])
+                ->name('login');
 
-        Route::post('login/resend', [AdminAuthController::class, 'resendOtp'])
-            ->middleware('throttle:2,1')
-            ->name('resend-otp');
+            Route::post('/login', [AdminAuthController::class, 'requestOtp'])
+                ->middleware('throttle:3,1')
+                ->name('request-otp');
 
-        // Admin Registration
-        Route::get('register', [AdminAuthController::class, 'registerShow'])
-            ->name('register');
+            Route::get('/login/verify', [AdminAuthController::class, 'verifyShow'])
+                ->name('login.verify');
 
-        Route::post('register', [AdminAuthController::class, 'requestRegistrationOtp'])
-            ->middleware('throttle:3,1')
-            ->name('request-register-otp');
+            Route::post('/login/verify', [AdminAuthController::class, 'verifyOtp'])
+                ->middleware('throttle:5,1')
+                ->name('verify-otp');
 
-        Route::get('register/verify', [AdminAuthController::class, 'registerVerifyShow'])
-            ->name('register.verify');
+            Route::post('/login/resend', [AdminAuthController::class, 'resendOtp'])
+                ->middleware('throttle:2,1')
+                ->name('resend-otp');
 
-        Route::post('register/verify', [AdminAuthController::class, 'verifyRegistrationOtp'])
-            ->middleware('throttle:5,1')
-            ->name('verify-register-otp');
+
+            // Admin Registration
+
+            Route::get('/register', [AdminAuthController::class, 'registerShow'])
+                ->name('register');
+
+            Route::post('/register', [AdminAuthController::class, 'requestRegistrationOtp'])
+                ->middleware('throttle:3,1')
+                ->name('request-register-otp');
+
+            Route::get('/register/verify', [AdminAuthController::class, 'registerVerifyShow'])
+                ->name('register.verify');
+
+            Route::post('/register/verify', [AdminAuthController::class, 'verifyRegistrationOtp'])
+                ->middleware('throttle:5,1')
+                ->name('verify-register-otp');
+        });
     });
 
-    Route::get('login', [AuthenticatedSessionController::class, 'create'])
+
+/*
+|--------------------------------------------------------------------------
+| Public/User Authentication
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware('guest')->group(function () {
+
+    Route::get('/register', [RegisteredUserController::class, 'create'])
+        ->name('register');
+
+    Route::post('/register', [RegisteredUserController::class, 'store']);
+
+    Route::get('/login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
 
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    Route::post('/login', [AuthenticatedSessionController::class, 'store']);
 
-    Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
+    Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
         ->name('password.request');
 
-    Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
         ->name('password.email');
 
-    Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
+    Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])
         ->name('password.reset');
 
-    Route::post('reset-password', [NewPasswordController::class, 'store'])
+    Route::post('/reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
 });
 
+
+/*
+|--------------------------------------------------------------------------
+| Authenticated User Routes
+|--------------------------------------------------------------------------
+*/
+
 Route::middleware('auth')->group(function () {
-    Route::get('verify-email', EmailVerificationPromptController::class)
+
+    Route::get('/verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
 
-    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+    Route::get('/verify-email/{id}/{hash}', VerifyEmailController::class)
         ->middleware(['signed', 'throttle:6,1'])
         ->name('verification.verify');
 
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+    Route::post('/email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
         ->middleware('throttle:6,1')
         ->name('verification.send');
 
-    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
+    Route::get('/confirm-password', [ConfirmablePasswordController::class, 'show'])
         ->name('password.confirm');
 
-    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+    Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']);
 
-    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+    Route::put('/password', [PasswordController::class, 'update'])
+        ->name('password.update');
 
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+    Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 });

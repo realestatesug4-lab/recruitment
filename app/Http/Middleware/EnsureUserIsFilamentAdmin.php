@@ -13,7 +13,7 @@ class EnsureUserIsFilamentAdmin
         $user = $request->user();
 
         if (! $user) {
-            return redirect()->guest(route('login'));
+            return redirect()->guest(route('admin.login'));
         }
 
         $isAdmin = method_exists($user, 'isAdmin') ? $user->isAdmin() : false;

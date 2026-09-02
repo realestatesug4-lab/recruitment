@@ -33,7 +33,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
+            ->domain(config('admin.panel_domain'))
             ->colors([
                 'primary' => Color::hex('#123aed'),
                 'gray' => Color::Slate,

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Contracts\Advertising\AdServerInterface;
+use App\Services\ReviveAdserverService;
 use App\View\Components\SmartAdComponent;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -14,7 +16,10 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //
+        $this->app->singleton(AdServerInterface::class, ReviveAdserverService::class);
+        $this->app->singleton(ReviveAdserverService::class, function () {
+            return new ReviveAdserverService();
+        });
     }
 
     public function boot(): void

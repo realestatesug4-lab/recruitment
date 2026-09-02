@@ -45,6 +45,9 @@ return [
         'username' => env('REVIVE_USERNAME', 'admin'),
         'password' => env('REVIVE_PASSWORD', 'password'),
         'enabled' => env('REVIVE_ENABLED', false),
+        'api_version' => env('REVIVE_API_VERSION', '3.0'),
+        'timeout' => (int) env('REVIVE_TIMEOUT', 30),
+        'session_cache_key' => env('REVIVE_SESSION_CACHE_KEY', 'revive_session_id'),
     ],
 
     'anthropic' => [

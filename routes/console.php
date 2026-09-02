@@ -11,5 +11,9 @@ Artisan::command('inspire', function () {
 
 App::booted(function () {
     $schedule = app(Schedule::class);
+
     $schedule->command('dashboard:compute-metrics')->dailyAt('02:00');
+    $schedule->command('revive:sync-zones')->dailyAt('01:00');
+    $schedule->command('revive:sync-stats --days=1')->dailyAt('01:30');
+    $schedule->command('revive:sync-stats --days=30')->dailyAt('02:30');
 });

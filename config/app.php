@@ -125,4 +125,6 @@ return [
 
     'admin_registration_code' => env('ADMIN_REGISTRATION_CODE'),
 
+    'admin_panel_domain' => env('ADMIN_PANEL_DOMAIN', 'admin.cranelinks.com'),
+
 ];
