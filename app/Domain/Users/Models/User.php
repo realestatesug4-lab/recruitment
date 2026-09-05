@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Domain\Users\Models\SeekerProfile;
+use App\Domain\Jobs\Models\SavedJob;
 use App\Domain\Users\Models\EmployerProfile;
 use Illuminate\Notifications\Notifiable;
 use Spatie\OneTimePasswords\Models\Concerns\HasOneTimePasswords;
@@ -60,7 +61,7 @@ class User extends Authenticatable implements FilamentUser
 
                 if ($rolesChanged || $isSuperAdminChanged) {
                     RoleChangeAudit::create([
-                        'user_id' => $user->id,
+                        'user_id' => $user->getKey(),
                         'changed_by' => optional(auth()->user())->id,
                         'before_roles' => $user->originalRoles,
                         'after_roles' => $currentRoles,
@@ -71,7 +72,7 @@ class User extends Authenticatable implements FilamentUser
                     $user->originalRoles = $currentRoles;
                 }
             } catch (\Throwable $e) {
-                \Illuminate\Support\Facades\Log::error('Failed to persist role change audit', ['error' => $e->getMessage()]);
+                Log::error('Failed to persist role change audit', ['error' => $e->getMessage()]);
             }
         });
     }
@@ -133,6 +134,6 @@ class User extends Authenticatable implements FilamentUser
 
     public function savedJobs(): HasMany
     {
-        return $this->hasMany(\App\Domain\Jobs\Models\SavedJob::class);
+        return $this->hasMany(SavedJob::class);
     }
 }

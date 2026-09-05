@@ -17,7 +17,6 @@ class SeekerProfile extends Model
     protected $table = 'seeker_profiles';
 
     protected $fillable = [
-        'uuid',
         'user_id',
         'headline',
         'bio',
@@ -32,7 +31,7 @@ class SeekerProfile extends Model
             Log::info('Seeker profile audit', [
                 'event' => 'created',
                 'actor_id' => auth()->id(),
-                'profile_id' => $profile->id,
+                'profile_id' => $profile->getKey(),
                 'uuid' => $profile->uuid,
                 'data' => $profile->fresh()->toArray(),
             ]);
@@ -42,7 +41,7 @@ class SeekerProfile extends Model
             Log::info('Seeker profile audit', [
                 'event' => 'updated',
                 'actor_id' => auth()->id(),
-                'profile_id' => $profile->id,
+                'profile_id' => $profile->getKey(),
                 'uuid' => $profile->uuid,
                 'data' => $profile->fresh()->toArray(),
             ]);
