@@ -7,6 +7,7 @@ use App\Events\CandidateProfileUpdated;
 use App\Http\Requests\StoreSeekerProfileRequest;
 use App\Http\Requests\UpdateSeekerProfileRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -29,6 +30,14 @@ class SeekerProfileController extends Controller
 
     public function store(StoreSeekerProfileRequest $request): RedirectResponse
     {
+        $user = Auth::user();
+
+        if ($user->seekerProfile) {
+            return redirect()
+            ->route('seeker.profile.edit')
+            ->with('error', 'You already have a profile. Please edit your existing profile.');
+        }
+
         $data = $request->validated();
         $skills = $this->normalizeSkills($data);
         unset($data['skills'], $data['resume']);
@@ -36,6 +45,12 @@ class SeekerProfileController extends Controller
         if ($request->hasFile('resume')) {
             $data['resume_url'] = $request->file('resume')->store('resumes', 'public');
         }
+
+        DB::transaction(function () use ($user, $data, $skills, &$profile) {
+            $profile = $user->seekerProfile()->create($data); $profile->skills()->sync($skills);
+        });
+
+        event(new CandidateProfileUpdated($user));
 
         $profile = Auth::user()->seekerProfile()->create($data);
 
@@ -47,13 +62,20 @@ class SeekerProfileController extends Controller
 
     public function edit(): View
     {
+
+        $profile = Auth::user()->seekerProfile;
+
         return view('seeker.profile.edit', [
-            'profile' => Auth::user()->seekerProfile,
+            'profile' => $profile,
         ]);
     }
 
     public function update(UpdateSeekerProfileRequest $request): RedirectResponse
     {
+
+        $user = Auth::user();
+        $profile = $user->seekerProfile;
+
         $data = $request->validated();
         $skills = $this->normalizeSkills($data);
         unset($data['skills'], $data['resume']);
@@ -63,9 +85,11 @@ class SeekerProfileController extends Controller
             $data['resume_url'] = $request->file('resume')->store('resumes', 'public');
         }
 
-        $profile->update($data);
-        $profile->skills()->sync($skills);
-        event(new CandidateProfileUpdated(Auth::user()));
+        DB::transaction(function () use ($profile, $data, $skills) {
+            $profile->update($data); $profile->skills()->sync($skills);
+        });
+
+        event(new CandidateProfileUpdated($user));
 
         return redirect()->route('seeker.profile.show')->with('success', 'Profile updated successfully.');
     }
