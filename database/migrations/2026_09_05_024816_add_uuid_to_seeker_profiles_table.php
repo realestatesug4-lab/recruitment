@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('seeker_profiles', function (Blueprint $table) {
-            //
+            $table->uuid('uuid')->unique()->after('id');
         });
     }
 
@@ -22,7 +22,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('seeker_profiles', function (Blueprint $table) {
-            //
+            $table->dropUnique(['uuid']);
+            $table->dropColumn('uuid');
         });
     }
 };
